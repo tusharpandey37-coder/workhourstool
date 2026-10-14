@@ -5,10 +5,10 @@
 <title>Weekly Hours Tracker</title>
 <style>
 :root{color-scheme:dark;--bg:#0b1120;--panel:#131c2e;--panel2:#1a263b;--ink:#edf3ff;--muted:#9aaac2;--line:#2a3850;--accent:#82aaff;--good:#56d6a0;--bad:#ff8585;--warn:#f5c56b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:980px;margin:24px auto;padding:0 15px}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}h1{font-size:clamp(25px,4vw,33px);margin:0}h2{font-size:19px;margin:0 0 14px}h3{font-size:16px;margin:0 0 12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin:13px 0}.controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px}label{font-size:13px;font-weight:650;color:var(--muted)}input,button{font:inherit}input[type=file],input[type=date],input[type=time]{max-width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--panel2);color:var(--ink)}button{border:0;border-radius:9px;padding:10px 15px;background:var(--accent);color:#091225;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}.hint{font-size:12px;color:var(--muted)}.message{padding:12px 14px;border-radius:10px;background:#1b3150;color:#d8e8ff;margin-top:12px}.message.good{background:#123b31;color:#a6f4d1}.message.bad{background:#451f2a;color:#ffc0c0}.hidden{display:none}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:var(--panel2);border:1px solid var(--line);padding:13px;border-radius:11px}.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:clamp(20px,3vw,27px);margin-top:4px;font-variant-numeric:tabular-nums}.progress{height:8px;background:#27354c;border-radius:20px;overflow:hidden;margin-top:14px}.progress>div{height:100%;background:var(--good);width:0}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.day{font-weight:700}.sub{font-size:11px;color:var(--muted)}.checkcell{text-align:center!important}.checkcell input{width:17px;height:17px;accent-color:var(--accent);vertical-align:middle}.checkcell input:disabled{accent-color:#a34d5b;opacity:.65}.attendance-imported{color:#ff8585;font-weight:700}.duration{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}.tag{font-size:11px;color:var(--muted)}.plannergrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 26px}.rowflex{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:980px;margin:24px auto;padding:0 15px}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}h1{font-size:clamp(25px,4vw,33px);margin:0}h2{font-size:19px;margin:0 0 14px}h3{font-size:16px;margin:0 0 12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin:13px 0}.controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px}label{font-size:13px;font-weight:650;color:var(--muted)}input,button{font:inherit}input[type=file],input[type=date],input[type=time]{max-width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--panel2);color:var(--ink)}button{border:0;border-radius:9px;padding:10px 15px;background:var(--accent);color:#091225;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}.hint{font-size:12px;color:var(--muted)}.message{padding:12px 14px;border-radius:10px;background:#1b3150;color:#d8e8ff;margin-top:12px}.message.good{background:#123b31;color:#a6f4d1}.message.bad{background:#451f2a;color:#ffc0c0}.hidden{display:none}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:var(--panel2);border:1px solid var(--line);padding:13px;border-radius:11px}.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:clamp(20px,3vw,27px);margin-top:4px;font-variant-numeric:tabular-nums}.progress{height:8px;background:#27354c;border-radius:20px;overflow:hidden;margin-top:14px}.progress>div{height:100%;background:var(--good);width:0}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.day{font-weight:700}.sub{font-size:11px;color:var(--muted)}.checkcell{text-align:center!important}.checkcell input{width:17px;height:17px;accent-color:var(--accent);vertical-align:middle}.checkcell input:disabled{accent-color:#a34d5b;opacity:.65}.attendance-imported{color:#56d6a0;font-weight:700}.checkcell input:disabled{accent-color:#a34d5b;opacity:.55}.checkcell input:disabled+span{color:#b85b68}.duration{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}.tag{font-size:11px;color:var(--muted)}.plannergrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 26px}.rowflex{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 @media(max-width:650px){main{margin:16px auto}.panel{padding:13px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.plannergrid{grid-template-columns:1fr}th,td{padding:9px 5px;font-size:12px}}
 </style></head><body><main>
-<header class="head"><h1>Weekly Hours Tracker</h1></header>
+<header class="head"><h1>Weekly Hours Tracker</h1><div id="weekBanner" style="width:100%;background:#1b3150;border:1px solid #355078;color:#d8e8ff;border-radius:10px;padding:10px 14px;font-weight:700"></div></header>
 <section class="panel">
  <div class="controls">
   <div class="field"><label for="csv">Upload attendance CSV</label><input id="csv" type="file" accept=".csv,text/csv" multiple></div>
@@ -41,10 +41,10 @@
   <div class="rowflex" style="margin-top:12px"><span class="hint">Save today's plan into this week's data.</span><button id="addToday" type="button">Add to current data</button></div>
   <div id="savedNotice" class="hint" style="margin-top:8px"></div>
  </section>
- <section class="panel"><h2>Trains to Dadar</h2><div class="controls">
- <label style="display:flex;align-items:center;gap:7px;color:var(--ink)"><input type="checkbox" id="curreyCheck"> Currey Road · Central line</label>
- <label style="display:flex;align-items:center;gap:7px;color:var(--ink)"><input type="checkbox" id="lowerCheck" checked> Lower Parel · Western line</label></div>
- <div id="trains" style="margin-top:12px"></div><div class="hint">Indicative timetable entries, not live running status. Check the updated timetable before travelling.</div></section>
+ <section class="panel"><h2>Trains towards Dadar</h2><div class="controls">
+ <label style="display:flex;align-items:center;gap:7px;color:var(--ink)"><input type="checkbox" id="lowerCheck" checked> Lower Parel · Western line</label>
+ <label style="display:flex;align-items:center;gap:7px;color:var(--ink)"><input type="checkbox" id="curreyCheck"> Currey Road · Central line</label></div>
+ <div id="trains" style="margin-top:12px"></div><div class="hint">Copied from the supplied Mumbai Lifeline timetable PDFs (16:00–19:00). These are scheduled times, not live running status; check for service changes before travelling.</div></section>
 </section>
 <footer class="footer">Developed by Tushar Pandey<br><br>Hey! explore more websites from the same developer<br><a style="color:var(--accent)" href="https://epspension.in" target="_blank" rel="noopener">epspension.in</a> &nbsp;·&nbsp; <a style="color:var(--accent)" href="https://kavyapath.com" target="_blank" rel="noopener">kavyapath.com</a></footer>
 <script>
@@ -61,9 +61,9 @@ function currentWeek(){return iso(new Date())}
 function durationFor(k){if(registered[k])return DAILY;if(plans[k]!==undefined)return plans[k];if(Object.prototype.hasOwnProperty.call(attendance,k))return attendance[k];return 0}
 function isWorkday(k){let d=new Date(k+'T12:00:00');return d.getDay()!==0&&d.getDay()!==6&&!HOLIDAYS[k]}
 function render(){let selected=iso(new Date());let dates=datesForWeek(selected),body=$('daysBody');body.innerHTML='';let worked=0,required=0,count=0;
-$('weekTitle').textContent=`${dates[0].toLocaleDateString('en-IN',{day:'numeric',month:'short'})} – ${dates[4].toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}`;
+$('weekTitle').textContent=`${dates[0].toLocaleDateString('en-IN',{day:'numeric',month:'short'})} – ${dates[4].toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}`;$('weekBanner').textContent='Current week · '+$('weekTitle').textContent;
 for(const d of dates){let k=iso(d),holiday=HOLIDAYS[k],hasCSV=Object.prototype.hasOwnProperty.call(attendance,k),isReg=!!registered[k],mins=durationFor(k);if(!holiday&&!leaves[k]){required+=DAILY;count++}worked+=mins;
-let tr=document.createElement('tr');tr.dataset.key=k;let cbDisabled=!!holiday||hasCSV||isReg;let label=holiday?holiday:(hasCSV?'CSV record':isReg?'Register day':plans[k]!==undefined?'Planned':'Working day');
+let tr=document.createElement('tr');tr.dataset.key=k;let cbDisabled=!!holiday||hasCSV||isReg;let label=holiday?holiday:(plans[k]!==undefined?'Manually added':hasCSV?'CSV record':isReg?'Register day':'Working day');
 tr.innerHTML=`<td><div class="day">${d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</div>${holiday?'<div class="sub">'+holiday+'</div>':''}</td><td class="checkcell"></td><td><span>${label}</span>${hasCSV?'<div class="sub attendance-imported">Attendance imported</div>':''}<div class="sub" style="margin-top:4px"><label style="font-weight:500"><input type="checkbox" class="reg" ${isReg?'checked':''} ${holiday?'disabled':''}> Register day</label></div></td><td class="duration">${fmt(mins)}</td>`;
 let cb=document.createElement('input');cb.type='checkbox';cb.checked=!!leaves[k];cb.disabled=cbDisabled;cb.title=hasCSV?'CSV attendance exists':holiday?'Public holiday':'';tr.children[1].appendChild(cb);cb.addEventListener('change',()=>{leaves[k]=cb.checked;render()});let reg=tr.querySelector('.reg');reg.addEventListener('change',()=>{registered[k]=reg.checked;if(reg.checked)leaves[k]=false;render()});body.appendChild(tr)}
 $('worked').textContent=fmt(worked);$('required').textContent=fmt(required);$('balance').textContent=signed(worked-required);$('balance').style.color=worked>=required?'var(--good)':'var(--bad)';$('daysCount').textContent=count;$('bar').style.width=(required?Math.min(100,worked/required*100):100)+'%';$('summary').className='message '+(worked>=required?'good':'');let todayKey=iso(new Date()),future=dates.filter(d=>iso(d)>todayKey&&!HOLIDAYS[iso(d)]&&!leaves[iso(d)]).length;
@@ -75,10 +75,87 @@ $('entryTime').addEventListener('change',updatePlan);$('leaveTime').addEventList
 $('addToday').addEventListener('click',()=>{let today=iso(new Date());if(!window.todayPlanned){updatePlan();if(!window.todayPlanned)return}plans[today]=window.todayPlanned;$('savedNotice').textContent='Today’s planned duration has been added to this week’s data.';render()});
 $('sample').addEventListener('click',()=>{attendance={'2026-10-12':531,'2026-10-13':489,'2026-10-14':510};leaves={};registered={};plans={};$('notice').className='message';$('notice').textContent='Example loaded.';render()});
 
-const TRAIN_TIMES={currey:[["17:35","CSMT–Kurla Slow","17:48"],["17:40","CSTM CLA LOCAL 97629","17:45"],["17:44","CSTM TNA LOCAL 97395","17:49"],["17:48","CSTM KYN LOCAL 97119","17:53"],["17:56","CSTM CLA LOCAL 97631","18:01"],["18:00","CSTM TNA LOCAL 97397","18:05"],["18:05","CSMT–Dadar Local","18:10"],["18:10","CSMT–Dadar Local","18:15"],["18:16","CSMT–Dadar Local","18:22"]],lower:[["16:55","Churchgate–Andheri Slow","16:59"],["17:04","Churchgate–Borivali Slow","17:08"],["17:13","Churchgate–Bandra Slow","17:17"],["17:21","Churchgate–Borivali Slow","17:25"],["17:29","Churchgate–Virar Slow","17:33"],["17:37","Churchgate–Borivali Slow","17:41"],["17:45","Churchgate–Andheri Slow","17:49"],["17:53","Churchgate–Borivali Slow","17:57"],["18:04","Churchgate–Borivali Slow","18:08"],["18:12","Churchgate–Virar Slow","18:16"],["18:20","Churchgate–Borivali Slow","18:24"],["18:28","Churchgate–Andheri Slow","18:32"],["18:36","Churchgate–Borivali Slow","18:40"],["18:44","Churchgate–Virar Slow","18:48"],["18:52","Churchgate–Borivali Slow","18:56"],["19:00","Churchgate–Borivali Slow","19:04"],["19:08","Churchgate–Virar Slow","19:12"],["19:16","Churchgate–Borivali Slow","19:20"],["19:24","Churchgate–Borivali Slow","19:28"],["19:32","Churchgate–Virar Slow","19:36"],["19:40","Churchgate–Borivali Slow","19:44"],["19:48","Churchgate–Borivali Slow","19:52"],["19:56","Churchgate–Virar Slow","20:00"],["20:04","Churchgate–Borivali Slow","20:08"],["20:12","Churchgate–Virar Slow","20:16"],["20:20","Churchgate–Borivali Slow","20:24"],["20:28","Churchgate–Borivali Slow","20:32"],["20:36","Churchgate–Virar Slow","20:40"],["20:44","Churchgate–Borivali Slow","20:48"],["20:52","Churchgate–Virar Slow","20:56"],["21:00","Churchgate–Borivali Slow","21:04"],["21:08","Churchgate–Borivali Slow","21:12"],["21:16","Churchgate–Virar Slow","21:20"],["21:24","Churchgate–Borivali Slow","21:28"],["21:32","Churchgate–Virar Slow","21:36"],["21:40","Churchgate–Borivali Slow","21:44"],["21:48","Churchgate–Borivali Slow","21:52"],["21:56","Churchgate–Virar Slow","22:00"]]};
 function minuteOf(t){let p=t.split(':').map(Number);return p[0]*60+p[1]}
-function renderTrains(){let n=$('trains');if(!n)return;let threshold=minuteOf($('leaveTime').value||'17:30')+10,sets=[];if($('curreyCheck').checked)sets.push(['Currey Road · Central line','currey','https://erail.in/trains-between-stations/currey-road-CRD/dadar-DR']);if($('lowerCheck').checked)sets.push(['Lower Parel · Western line','lower','https://erail.in/trains-between-stations/lower-parel-PL/dadar-wr-DDR']);n.innerHTML='';if(!sets.length){n.textContent='Select a station to view trains.';return}for(const [title,key,url] of sets){let list=TRAIN_TIMES[key].filter(t=>minuteOf(t[0])>=threshold).slice(0,5);let div=document.createElement('div');div.style.marginBottom='14px';div.innerHTML='<h3>'+title+'</h3>'+(list.length?list.map(t=>'<div style="display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)"><span>'+t[1]+'</span><strong>'+t[0]+' → '+t[2]+'</strong></div>').join(''):'<div class="hint">No sample times available after this time. Check the full timetable.</div>')+'<p><a style="color:var(--accent)" target="_blank" rel="noopener" href="'+url+'">Check updated timetable ↗</a></p>';n.appendChild(div)}}
+function timeText(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+
+const TRAIN_DATA = {
+ lower: [
+ ['16:01','16:06','BVI','Borivali'],['16:05','16:10','BVI','Borivali'],['16:08','16:13','GMN','Goregaon'],
+ ['16:12','16:17','BVI','Borivali'],['16:15','16:20','VR','Virar'],['16:18','16:23','BVI','Borivali'],
+ ['16:21','16:26','BVI','Borivali'],['16:24','16:29','GMN','Goregaon'],['16:27','16:32','BVI · Mon–Sat','Borivali'],
+ ['16:33','16:38','BVI AC','Borivali'],['16:37','16:42','BVI','Borivali'],['16:43','16:48','BVI','Borivali'],
+ ['16:49','16:54','BVI','Borivali'],['16:52','16:57','BVI','Borivali'],['16:56','17:01','GMN','Goregaon'],
+ ['16:59','17:04','ADH','Vile Parle'],['17:02','17:07','BVI','Borivali'],['17:07','17:12','BVI','Borivali'],
+ ['17:10','17:15','BVI','Borivali'],['17:13','17:18','GMN','Goregaon'],['17:16','17:21','BVI · Mon–Sat','Borivali'],
+ ['17:20','17:25','GMN','Goregaon'],['17:23','17:28','ADH · Mon–Sat','Vile Parle'],
+ ['17:26','17:31','BVI','Borivali'],['17:32','17:37','BVI','Borivali'],['17:36','17:41','VR','Virar'],
+ ['17:40','17:45','BVI','Borivali'],['17:43','17:48','BA','Bandra'],['17:46','17:51','GMN','Goregaon'],
+ ['17:49','17:54','BVI','Borivali'],['17:55','18:00','BVI','Borivali'],['17:58','18:03','GMN','Goregaon'],
+ ['18:01','18:06','ADH','Vile Parle'],['18:04','18:09','BVI','Borivali'],['18:07','18:12','BA · Mon–Sat','Bandra'],
+ ['18:10','18:15','VR','Virar'],['18:13','18:18','GMN AC','Goregaon'],['18:16','18:21','BVI · Mumbai Central origin','Borivali'],
+ ['18:16','18:21','BVI','Borivali'],['18:19','18:24','VR','Virar'],['18:22','18:27','BVI','Borivali'],
+ ['18:29','18:34','VR','Virar'],['18:32','18:37','BVI','Borivali'],['18:35','18:40','BVI','Borivali'],
+ ['18:38','18:43','GMN','Goregaon'],['18:41','18:46','BA','Bandra'],['18:44','18:49','BVI','Borivali'],
+ ['18:48','18:53','BVI · Mon–Sat','Borivali'],['18:51','18:56','BVI','Borivali'],['18:54','18:59','BYR AC','Bhayandar'],
+ ['18:57','19:02','BA','Bandra']
+ ],
+ currey: [
+ ['16:09','16:15','K83','Kalyan'],['16:12','16:18','DL29 AC · Mon–Sat','Dombivli'],['16:16','16:22','K85','Kalyan'],
+ ['16:20','16:26','T77 · Mon–Sat','Thane'],['16:25','16:31','A37','Ambernath'],['16:29','16:35','T79','Thane'],
+ ['16:33','16:39','TL39','Titwala'],['16:42','16:48','T81 · Mon–Sat','Thane'],['16:46','16:52','DL31','Dombivli'],
+ ['16:50','16:56','T83 AC · Mon–Sat','Thane'],['16:55','17:01','C25 · Mon–Sat','Kurla'],['17:00','17:06','K89','Kalyan'],
+ ['17:04','17:10','T85','Thane'],['17:12','17:19','K91','Kalyan'],['17:16','17:22','T87','Thane'],
+ ['17:20','17:26','DL33','Dombivli'],['17:24','17:30','T89 · Mon–Sat','Thane'],['17:28','17:34','K93','Kalyan'],
+ ['17:36','17:42','T91 · Mon–Sat','Thane'],['17:40','17:46','C27 · Mon–Sat','Kurla'],['17:44','17:50','T93','Thane'],
+ ['17:48','17:54','K97','Kalyan'],['17:56','18:02','C29','Kurla'],['18:00','18:06','T95 · Mon–Sat','Thane'],
+ ['18:04','18:10','K99','Kalyan'],['18:09','18:15','DL37','Dombivli'],['18:15','18:23','T97 · Mon–Sat','Thane'],
+ ['18:19','18:26','LSPL · Mon–Sat','Kalyan'],['18:26','18:32','K105','Kalyan'],['18:30','18:36','DL39 AC · Mon–Sat','Dombivli'],
+ ['18:34','18:40','C31','Kurla'],['18:38','18:44','T101 · Mon–Sat','Thane'],['18:45','18:51','A47','Ambernath'],
+ ['18:49','18:55','T103 · Mon–Sat','Thane'],['18:53','18:59','DL41','Dombivli'],['18:57','19:03','T105 AC · Mon–Sat','Thane']
+ ]
+};
+
+function renderTrains(){
+ const n=$('trains'); if(!n)return;
+ const exit=$('leaveTime').value||'17:30';
+ const after=timeText(minuteOf(exit)+2);
+ const stations=[];
+ if($('lowerCheck').checked)stations.push({key:'lower',title:'Lower Parel · Western line',station:'Lower Parel'});
+ if($('curreyCheck').checked)stations.push({key:'currey',title:'Currey Road · Central line',station:'Currey Road'});
+ n.innerHTML='';
+ if(!stations.length){n.textContent='Select a station to view trains.';return}
+ for(const s of stations){
+   const upcoming=TRAIN_DATA[s.key].filter(t=>minuteOf(t[0])>=minuteOf(after)&&minuteOf(t[0])<=minuteOf('19:00')).slice(0,10);
+   const div=document.createElement('div');div.style.marginBottom='18px';
+   const heading=document.createElement('h3');heading.textContent=s.title;div.appendChild(heading);
+   const note=document.createElement('div');note.className='hint';
+   note.textContent=`Scheduled departures from ${after} onwards · ${upcoming.length} shown · source timetable window 16:00–19:00`;
+   div.appendChild(note);
+   if(!upcoming.length){
+     const empty=document.createElement('p');empty.textContent='No listed departures remain in the 16:00–19:00 timetable after this time.';
+     div.appendChild(empty);
+   } else {
+     const wrap=document.createElement('div');wrap.className='tablewrap';
+     const table=document.createElement('table');
+     table.innerHTML=`<thead><tr><th>Train</th><th>${s.station}</th><th>Dadar</th><th>Destination</th></tr></thead><tbody></tbody>`;
+     const tbody=table.querySelector('tbody');
+     for(const t of upcoming){
+       const tr=document.createElement('tr');
+       for(const value of t.slice(2,3).concat(t.slice(0,2),t.slice(3,4))){
+         const td=document.createElement('td');td.textContent=value;tr.appendChild(td);
+       }
+       tbody.appendChild(tr);
+     }
+     wrap.appendChild(table);div.appendChild(wrap);
+   }
+   const source=document.createElement('p');source.className='hint';
+   const a=document.createElement('a');a.href=s.key==='lower'?'https://www.mumbailifeline.com/timetable/western/lower_parel/dadar?after=16%3A00&before=19%3A00':'https://www.mumbailifeline.com/timetable/central/currey_road/dadar?after=16%3A00&before=19%3A00';
+   a.target='_blank';a.rel='noopener';a.style.color='var(--accent)';a.textContent='Open original timetable ↗';
+   source.appendChild(a);div.appendChild(source);n.appendChild(div);
+ }
+}
 $('curreyCheck').addEventListener('change',renderTrains);$('lowerCheck').addEventListener('change',renderTrains);
 
-currentWeek();let now=new Date();$('entryTime').value='09:00';$('leaveTime').value='17:30';renderTrains();render();
+
+currentWeek();let now=new Date();let entryDefault=now.getHours()*60+now.getMinutes();$('entryTime').value=String(Math.floor(entryDefault/60)%24).padStart(2,'0')+':'+String(entryDefault%60).padStart(2,'0');let exitDefault=(entryDefault+510)%1440;$('leaveTime').value=String(Math.floor(exitDefault/60)).padStart(2,'0')+':'+String(exitDefault%60).padStart(2,'0');renderTrains();render();
 </script></main></body></html>
