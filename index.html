@@ -11,7 +11,7 @@
 <header class="head"><h1>Weekly Hours Tracker</h1><div id="weekBanner" style="width:100%;background:#365b28;border:1px solid #78a85f;color:#f0ffe8;border-radius:10px;padding:10px 14px;font-weight:700"></div></header>
 <section class="panel">
  <div class="controls">
-  <div class="field"><label for="csv">Upload attendance CSV</label><input id="csv" type="file" accept=".csv,text/csv" multiple></div>
+  <div class="field"><label for="csv">Upload attendance CSV</label><input id="csv" type="file" accept=".csv,text/csv,text/comma-separated-values,application/vnd.ms-excel,text/plain" multiple></div>
   <button id="sample" class="secondary" type="button">Load CSV data</button>
  </div>
  <div id="notice" class="message hidden"></div>
@@ -73,7 +73,7 @@ function updatePlan(){let entry=$('entryTime').value,exit=$('leaveTime').value;i
 $('csv').addEventListener('change',async e=>{let files=Array.from(e.target.files||[]);if(!files.length)return;if(files.length>2){$('notice').className='message bad';$('notice').textContent='Please select no more than two CSV files.';e.target.value='';return}attendance={};for(const f of files)Object.assign(attendance,parseCSV(await f.text()));leaves={};registered={};plans={};csvLoaded=true;render();const weekDates=datesForWeek(iso(new Date()));const inWeek=weekDates.some(d=>Object.prototype.hasOwnProperty.call(attendance,iso(d)));$('notice').className='message'+(inWeek?'':' bad');$('notice').textContent=Object.keys(attendance).length===0?'No attendance data found. Export attendance data and upload above.':inWeek?'Data fetched successfully.': 'No attendance data found for the current week. Check the CSV file and upload the proper data.';});
 $('entryTime').addEventListener('change',updatePlan);$('leaveTime').addEventListener('change',()=>{updatePlan();renderTrains()});
 $('addToday').addEventListener('click',()=>{let today=iso(new Date());if(!window.todayPlanned){updatePlan();if(!window.todayPlanned)return}plans[today]=window.todayPlanned;$('savedNotice').textContent='Today’s planned duration has been added to this week’s data.';render()});
-$('sample').addEventListener('click',()=> $('csv').click());
+$('sample').addEventListener('click',()=>{const picker=$('csv');try{if(typeof picker.showPicker==='function'){picker.showPicker();return}}catch(err){}picker.click()});
 
 function minuteOf(t){let p=t.split(':').map(Number);return p[0]*60+p[1]}
 function timeText(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
