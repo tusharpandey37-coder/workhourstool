@@ -7,8 +7,31 @@
 :root{color-scheme:dark;--bg:#0b1120;--panel:#131c2e;--panel2:#1a263b;--ink:#edf3ff;--muted:#9aaac2;--line:#2a3850;--accent:#82aaff;--good:#56d6a0;--bad:#ff8585;--warn:#f5c56b}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:980px;margin:24px auto;padding:0 15px}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}h1{font-size:clamp(25px,4vw,33px);margin:0}h2{font-size:19px;margin:0 0 14px}h3{font-size:16px;margin:0 0 12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin:13px 0}.controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px}label{font-size:13px;font-weight:650;color:var(--muted)}input,button{font:inherit}input[type=file],input[type=date],input[type=time]{max-width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--panel2);color:var(--ink)}button{border:0;border-radius:9px;padding:10px 15px;background:var(--accent);color:#091225;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}.hint{font-size:12px;color:var(--muted)}.message{padding:12px 14px;border-radius:10px;background:#1b3150;color:#d8e8ff;margin-top:12px}.message.good{background:#123b31;color:#a6f4d1}.message.bad{background:#451f2a;color:#ffc0c0}.hidden{display:none}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:var(--panel2);border:1px solid var(--line);padding:13px;border-radius:11px}.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:clamp(20px,3vw,27px);margin-top:4px;font-variant-numeric:tabular-nums}.progress{height:8px;background:#27354c;border-radius:20px;overflow:hidden;margin-top:14px}.progress>div{height:100%;background:var(--good);width:0}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.day{font-weight:700}.sub{font-size:11px;color:var(--muted)}.checkcell{text-align:center!important}.checkcell input{width:17px;height:17px;accent-color:var(--accent);vertical-align:middle}.checkcell input:disabled{accent-color:#a34d5b;opacity:.65}.attendance-imported{color:#56d6a0;font-weight:700}.checkcell input:disabled{accent-color:#a34d5b;opacity:.55}.checkcell input:disabled+span{color:#b85b68}.duration{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}.tag{font-size:11px;color:var(--muted)}.plannergrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 26px}.rowflex{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 @media(max-width:650px){main{margin:16px auto}.panel{padding:13px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.plannergrid{grid-template-columns:1fr}th,td{padding:9px 5px;font-size:12px}}
+
+/* Visual hierarchy and accessible contrast */
+#sample{background:linear-gradient(135deg,#2563eb,#4f46e5);border:1px solid #93c5fd;color:#fff;font-weight:800;box-shadow:0 5px 16px rgba(37,99,235,.28);padding:11px 18px;border-radius:12px;letter-spacing:.15px}
+#sample:hover{filter:brightness(1.12);transform:translateY(-1px)}
+#weekBanner{box-shadow:0 5px 18px rgba(127,29,45,.2);letter-spacing:.2px}
+#summaryPanel{background:linear-gradient(145deg,#172c49,#242044 65%,#183b42);border:1px solid #465d91}
+#summaryPanel h2{color:#dbeafe}
+#summaryPanel .stat:nth-child(1){background:linear-gradient(145deg,#123b45,#155e75);border-color:#2dd4bf}
+#summaryPanel .stat:nth-child(2){background:linear-gradient(145deg,#39204e,#5b2b68);border-color:#c084fc}
+#summaryPanel .stat:nth-child(3){background:linear-gradient(145deg,#49351a,#704214);border-color:#fbbf24}
+#summaryPanel .stat:nth-child(4){background:linear-gradient(145deg,#173b2e,#14532d);border-color:#4ade80}
+#summaryPanel .stat small{color:#e0e7ff}
+#summaryPanel .stat strong{color:#fff}
+#summaryPanel .progress{background:#0b1220;border:1px solid #64748b}
+#summaryPanel .progress>div{background:linear-gradient(90deg,#34d399,#a3e635)}
+#summaryPanel #balanceMessage{display:block;margin-top:14px;padding:13px 15px;border-radius:11px;background:#102a43;border:1px solid #60a5fa;color:#eff6ff;font-weight:800;font-size:clamp(15px,2.3vw,18px);line-height:1.5}
+#notice.good{background:#102f24;border:1px solid #34d399;color:#86efac;font-style:italic;font-weight:700}
+#notice.bad{background:#431b25;border:1px solid #fb7185;color:#fecdd3;font-weight:700}
+.attendance-manual{color:#56d6a0;font-weight:800}
+.panel{box-shadow:0 8px 26px rgba(0,0,0,.14)}
+.panel:nth-of-type(odd){border-color:#344b70}
+.panel:nth-of-type(even){border-color:#3b4268}
+
 </style></head><body><main>
-<header class="head"><h1>Weekly Hours Tracker</h1><div id="weekBanner" style="width:100%;background:#365b28;border:1px solid #78a85f;color:#f0ffe8;border-radius:10px;padding:10px 14px;font-weight:700"></div></header>
+<header class="head"><h1>Weekly Hours Tracker</h1><div id="weekBanner" style="width:100%;background:#7f1d2d;border:1px solid #fb7185;color:#fff1f2;border-radius:10px;padding:10px 14px;font-weight:700"></div></header>
 <section class="panel">
  <div class="controls">
   <div class="field"><label for="csv">Upload attendance CSV</label><input id="csv" type="file" accept=".csv,text/csv,text/comma-separated-values,application/vnd.ms-excel,text/plain" multiple></div>
@@ -21,7 +44,7 @@
   <div class="rowflex"><h2 style="margin:0">Week breakdown</h2><span id="weekTitle" class="tag"></span></div>
   <div class="tablewrap"><table><thead><tr><th>Day</th><th class="checkcell">Mark leave</th><th>Attendance</th><th>Hours</th></tr></thead><tbody id="daysBody"></tbody></table></div>
  </section>
- <section class="panel">
+ <section class="panel" id="summaryPanel">
   <h2>Week summary</h2>
   <div class="stats">
    <div class="stat"><small>Hours completed</small><strong id="worked">0:00</strong></div>
@@ -70,7 +93,7 @@ $('worked').textContent=fmt(worked);$('required').textContent=fmt(required);$('b
 $('summary').textContent=worked>=required?`Target met. You are ${fmt(worked-required)} above the required hours.`:`You need ${fmt(required-worked)} more hours${future?` in the next ${future} working day${future===1?'':'s'}`:''}.`;
 $('results').classList.remove('hidden');$('planTitle').textContent='Plan today · '+new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});updatePlan()}
 function updatePlan(){let entry=$('entryTime').value,exit=$('leaveTime').value;if(!entry||!exit){$('todayPlan').textContent='Enter your entry and planned exit time.';return}let a=Number(entry.slice(0,2))*60+Number(entry.slice(3,5)),b=Number(exit.slice(0,2))*60+Number(exit.slice(3,5));if(b<=a){$('todayPlan').className='message bad';$('todayPlan').textContent='Planned exit must be later than entry.';return}let today=iso(new Date()),planned=b-a;let existing=durationFor(today);let prior=Object.prototype.hasOwnProperty.call(attendance,today)||registered[today]||plans[today]!==undefined;$('todayPlan').className='message';$('todayPlan').textContent=`Planned time: ${fmt(planned)}. ${planned>=DAILY?'Daily benchmark covered.':'You are '+fmt(DAILY-planned)+' short of the daily benchmark.'} ${prior?'A record already exists for today; adding this plan will replace today’s saved plan only.':''}`;window.todayPlanned=planned;renderTrains()}
-$('csv').addEventListener('change',async e=>{let files=Array.from(e.target.files||[]);if(!files.length)return;if(files.length>2){$('notice').className='message bad';$('notice').textContent='Please select no more than two CSV files.';e.target.value='';return}attendance={};for(const f of files)Object.assign(attendance,parseCSV(await f.text()));leaves={};registered={};plans={};csvLoaded=true;render();const weekDates=datesForWeek(iso(new Date()));const inWeek=weekDates.some(d=>Object.prototype.hasOwnProperty.call(attendance,iso(d)));$('notice').className='message'+(inWeek?'':' bad');$('notice').textContent=Object.keys(attendance).length===0?'No attendance data found. Export attendance data and upload above.':inWeek?'Data fetched successfully.': 'No attendance data found for the current week. Check the CSV file and upload the proper data.';});
+$('csv').addEventListener('change',async e=>{let files=Array.from(e.target.files||[]);if(!files.length)return;if(files.length>2){$('notice').className='message bad';$('notice').textContent='Please select no more than two CSV files.';e.target.value='';return}attendance={};for(const f of files)Object.assign(attendance,parseCSV(await f.text()));leaves={};registered={};plans={};csvLoaded=true;render();const weekDates=datesForWeek(iso(new Date()));const inWeek=weekDates.some(d=>Object.prototype.hasOwnProperty.call(attendance,iso(d)));$('notice').className='message '+(inWeek?'good':'bad');$('notice').textContent=Object.keys(attendance).length===0?'No attendance data found. Export attendance data and upload above.':inWeek?'Data fetched successfully.': 'No attendance data found for the current week. Check the CSV file and upload the proper data.';});
 $('entryTime').addEventListener('change',updatePlan);$('leaveTime').addEventListener('change',()=>{updatePlan();renderTrains()});
 $('addToday').addEventListener('click',()=>{let today=iso(new Date());if(!window.todayPlanned){updatePlan();if(!window.todayPlanned)return}plans[today]=window.todayPlanned;$('savedNotice').textContent='Today’s planned duration has been added to this week’s data.';render()});
 $('sample').addEventListener('click',()=>{const picker=$('csv');try{if(typeof picker.showPicker==='function'){picker.showPicker();return}}catch(err){}picker.click()});
@@ -93,7 +116,7 @@ const TRAIN_DATA = {
 function renderTrains(){
  const n=$('trains'); if(!n)return;
  const exit=$('leaveTime').value||'17:30';
- const after=timeText(minuteOf(exit)+2);
+ const after=exit;
  const stations=[];
  if($('lowerCheck').checked)stations.push({key:'lower',title:'Lower Parel · Western line',station:'Lower Parel'});
  if($('curreyCheck').checked)stations.push({key:'currey',title:'Currey Road · Central line',station:'Currey Road'});
@@ -104,7 +127,7 @@ function renderTrains(){
    const div=document.createElement('div');div.style.marginBottom='18px';
    const heading=document.createElement('h3');heading.textContent=s.title;div.appendChild(heading);
    const note=document.createElement('div');note.className='hint';
-   note.textContent=`Scheduled departures from ${after} onwards · ${upcoming.length} shown · scheduled timetable window 13:00–22:00`;
+   note.textContent=`Departures from ${after} onwards · ${upcoming.length} shown · illustrative timetable`;
    div.appendChild(note);
    if(!upcoming.length){
      const empty=document.createElement('p');empty.textContent='No listed departures remain in the 16:00–19:00 timetable after this time.';
