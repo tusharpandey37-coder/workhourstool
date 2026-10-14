@@ -1,116 +1,1053 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Weekly Hours Tracker</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1120;--panel:#131c2e;--panel2:#1a263b;--ink:#edf3ff;--muted:#9aaac2;--line:#2a3850;--accent:#82aaff;--good:#56d6a0;--bad:#ff8585;--warn:#f5c56b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:980px;margin:24px auto;padding:0 15px}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}h1{font-size:clamp(25px,4vw,33px);margin:0}h2{font-size:19px;margin:0 0 14px}h3{font-size:16px;margin:0 0 12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin:13px 0}.controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px}label{font-size:13px;font-weight:650;color:var(--muted)}input,button{font:inherit}input[type=file],input[type=date],input[type=time]{max-width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--panel2);color:var(--ink)}button{border:0;border-radius:9px;padding:10px 15px;background:var(--accent);color:#091225;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}.hint{font-size:12px;color:var(--muted)}.message{padding:12px 14px;border-radius:10px;background:#1b3150;color:#d8e8ff;margin-top:12px}.message.good{background:#123b31;color:#a6f4d1}.message.bad{background:#451f2a;color:#ffc0c0}.hidden{display:none}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:var(--panel2);border:1px solid var(--line);padding:13px;border-radius:11px}.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:clamp(20px,3vw,27px);margin-top:4px;font-variant-numeric:tabular-nums}.progress{height:8px;background:#27354c;border-radius:20px;overflow:hidden;margin-top:14px}.progress>div{height:100%;background:var(--good);width:0}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.day{font-weight:700}.sub{font-size:11px;color:var(--muted)}.checkcell{text-align:center!important}.checkcell input{width:17px;height:17px;accent-color:var(--accent);vertical-align:middle}.checkcell input:disabled{accent-color:#a34d5b;opacity:.65}.attendance-imported{color:#56d6a0;font-weight:700}.checkcell input:disabled{accent-color:#a34d5b;opacity:.55}.checkcell input:disabled+span{color:#b85b68}.duration{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}.tag{font-size:11px;color:var(--muted)}.plannergrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 26px}.rowflex{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-@media(max-width:650px){main{margin:16px auto}.panel{padding:13px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.plannergrid{grid-template-columns:1fr}th,td{padding:9px 5px;font-size:12px}}
+:root {
+  color-scheme: light;
+  --bg: #f0f4f8;
+  --bg-gradient: linear-gradient(160deg, #e8f0fe 0%, #f0f4f8 40%, #f8fafc 100%);
+  --panel: #ffffff;
+  --panel2: #f8fafc;
+  --ink: #1e293b;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+  --accent-hover: #1d4ed8;
+  --good: #059669;
+  --good-bg: #ecfdf5;
+  --good-border: #a7f3d0;
+  --bad: #dc2626;
+  --bad-bg: #fef2f2;
+  --bad-border: #fecaca;
+  --warn: #d97706;
+  --warn-bg: #fffbeb;
+  --warn-border: #fde68a;
+  --info: #0284c7;
+  --info-bg: #f0f9ff;
+  --info-border: #bae6fd;
+  --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 10px 40px rgba(15, 23, 42, 0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
 
-/* Visual hierarchy and accessible contrast */
-#sample{background:linear-gradient(135deg,#2563eb,#4f46e5);border:1px solid #93c5fd;color:#fff;font-weight:800;box-shadow:0 5px 16px rgba(37,99,235,.28);padding:11px 18px;border-radius:12px;letter-spacing:.15px}
-#sample:hover{filter:brightness(1.12);transform:translateY(-1px)}
-#weekBanner{box-shadow:0 5px 18px rgba(127,29,45,.2);letter-spacing:.2px}
-#summaryPanel{background:linear-gradient(145deg,#172c49,#242044 65%,#183b42);border:1px solid #465d91}
-#summaryPanel h2{color:#dbeafe}
-#summaryPanel .stat:nth-child(1){background:linear-gradient(145deg,#123b45,#155e75);border-color:#2dd4bf}
-#summaryPanel .stat:nth-child(2){background:linear-gradient(145deg,#39204e,#5b2b68);border-color:#c084fc}
-#summaryPanel .stat:nth-child(3){background:linear-gradient(145deg,#49351a,#704214);border-color:#fbbf24}
-#summaryPanel .stat:nth-child(4){background:linear-gradient(145deg,#173b2e,#14532d);border-color:#4ade80}
-#summaryPanel .stat small{color:#e0e7ff}
-#summaryPanel .stat strong{color:#fff}
-#summaryPanel .progress{background:#0b1220;border:1px solid #64748b}
-#summaryPanel .progress>div{background:linear-gradient(90deg,#34d399,#a3e635)}
-#summaryPanel #balanceMessage{display:block;margin-top:14px;padding:13px 15px;border-radius:11px;background:#102a43;border:1px solid #60a5fa;color:#eff6ff;font-weight:800;font-size:clamp(15px,2.3vw,18px);line-height:1.5}
-#notice.good{background:#102f24;border:1px solid #34d399;color:#86efac;font-style:italic;font-weight:700}
-#notice.bad{background:#431b25;border:1px solid #fb7185;color:#fecdd3;font-weight:700}
-.attendance-manual{color:#56d6a0;font-weight:800}
-.panel{box-shadow:0 8px 26px rgba(0,0,0,.14)}
-.panel:nth-of-type(odd){border-color:#344b70}
-.panel:nth-of-type(even){border-color:#3b4268}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+}
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
 
+/* Header */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.head h1 {
+  font-size: clamp(26px, 4.5vw, 34px);
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.head:hover h1 { filter: brightness(1.1); }
+#weekBanner {
+  width: 100%;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #93c5fd;
+  color: #1e40af;
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
 
-.train-table{width:100%;table-layout:fixed}
-.train-table th,.train-table td,.train-table th:last-child,.train-table td:last-child{text-align:center!important;vertical-align:middle}
-.train-table th{white-space:normal}
-.train-table td{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.train-table th:first-child,.train-table td:first-child{width:34%}
-.train-table th:nth-child(2),.train-table td:nth-child(2){width:32%}
-.train-table th:nth-child(3),.train-table td:nth-child(3){width:34%}
-@media(max-width:480px){.train-table th,.train-table td{padding:10px 4px;font-size:11px}}
+/* Panels */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 14px 0;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s ease;
+}
+.panel:hover { box-shadow: var(--shadow-lg); }
+h2 {
+  font-size: 18px;
+  margin: 0 0 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+h3 {
+  font-size: 15px;
+  margin: 0 0 10px;
+  font-weight: 650;
+  color: var(--ink);
+}
 
-</style></head><body><main>
-<header class="head"><h1>Weekly Hours Tracker</h1><div id="weekBanner" style="width:100%;background:#7f1d2d;border:1px solid #fb7185;color:#fff1f2;border-radius:10px;padding:10px 14px;font-weight:700"></div></header>
+/* Controls */
+.controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+label {
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+input[type=file],
+input[type=date] {
+  max-width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  background: var(--panel2);
+  color: var(--ink);
+  font: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input[type=file]:hover,
+input[type=date]:hover {
+  border-color: var(--accent);
+}
+input[type=file]:focus,
+input[type=date]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Buttons */
+button {
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+button:active { transform: translateY(0); }
+button.secondary {
+  background: var(--panel2);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  box-shadow: none;
+}
+button.secondary:hover {
+  background: #f1f5f9;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+#sample {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  border: none;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+  padding: 11px 20px;
+  border-radius: 12px;
+  letter-spacing: 0.02em;
+}
+#sample:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.hint {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* Messages / Alerts */
+.message {
+  padding: 13px 16px;
+  border-radius: 12px;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  color: #0c4a6e;
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.message.good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+  color: #065f46;
+  font-weight: 600;
+}
+.message.bad {
+  background: var(--bad-bg);
+  border-color: var(--bad-border);
+  color: #991b1b;
+  font-weight: 600;
+}
+.hidden { display: none; }
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.stat {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
+}
+.stat small {
+  display: block;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.stat strong {
+  display: block;
+  font-size: clamp(20px, 3vw, 26px);
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--ink);
+}
+#summaryPanel {
+  background: linear-gradient(160deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--line);
+}
+#summaryPanel .stat:nth-child(1) {
+  background: linear-gradient(145deg, #ecfdf5, #d1fae5);
+  border-color: #6ee7b7;
+}
+#summaryPanel .stat:nth-child(1) strong { color: #047857; }
+#summaryPanel .stat:nth-child(2) {
+  background: linear-gradient(145deg, #eff6ff, #dbeafe);
+  border-color: #93c5fd;
+}
+#summaryPanel .stat:nth-child(2) strong { color: #1d4ed8; }
+#summaryPanel .stat:nth-child(3) {
+  background: linear-gradient(145deg, #fffbeb, #fef3c7);
+  border-color: #fcd34d;
+}
+#summaryPanel .stat:nth-child(3) strong { color: #b45309; }
+#summaryPanel .stat:nth-child(4) {
+  background: linear-gradient(145deg, #f5f3ff, #ede9fe);
+  border-color: #c4b5fd;
+}
+#summaryPanel .stat:nth-child(4) strong { color: #6d28d9; }
+
+.progress {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+.progress > div {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  width: 0;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+#summary {
+  display: block;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  color: #0c4a6e;
+  font-weight: 650;
+  font-size: clamp(14px, 2.2vw, 16px);
+  line-height: 1.5;
+}
+#summary.good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+  color: #065f46;
+}
+#notice.good {
+  background: var(--good-bg);
+  border: 1px solid var(--good-border);
+  color: #065f46;
+  font-weight: 600;
+}
+#notice.bad {
+  background: var(--bad-bg);
+  border: 1px solid var(--bad-border);
+  color: #991b1b;
+  font-weight: 600;
+}
+
+/* Table */
+.tablewrap { overflow-x: auto; border-radius: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+}
+th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-weight: 700;
+  background: var(--panel2);
+}
+td:last-child, th:last-child { text-align: right; }
+.day { font-weight: 650; }
+.sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.checkcell { width: 70px; text-align: center !important; }
+.duration {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--ink);
+}
+.attendance-manual {
+  color: var(--good);
+  font-weight: 700;
+}
+.attendance-imported {
+  color: var(--accent);
+  font-weight: 600;
+}
+.tag {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.rowflex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Time picker – drum / spinner style */
+.plannergrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+@media (max-width: 700px) {
+  .plannergrid { grid-template-columns: 1fr; }
+}
+
+.time-picker {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+}
+.time-picker .picker-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+.time-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  user-select: none;
+}
+.spinner button {
+  width: 36px;
+  height: 28px;
+  padding: 0;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: var(--ink);
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spinner button:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: none;
+  box-shadow: none;
+}
+.spinner .value {
+  font-size: 28px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  min-width: 42px;
+  text-align: center;
+  color: var(--ink);
+  line-height: 1.3;
+  cursor: grab;
+  padding: 2px 0;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.spinner .value:active { cursor: grabbing; background: var(--accent-soft); }
+.spinner .value:hover { background: #e0f2fe; }
+.colon {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 2px;
+  padding-top: 4px;
+}
+.duration-picker .spinner .value {
+  font-size: 24px;
+  min-width: 36px;
+}
+.duration-unit {
+  font-size: 11px;
+  font-weight: 650;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.exit-display {
+  background: linear-gradient(145deg, #eff6ff, #dbeafe);
+  border-color: #93c5fd;
+}
+.exit-display .value { color: #1d4ed8; }
+.exit-display .picker-label { color: #1e40af; }
+
+/* Train table */
+.train-table { width: 100%; table-layout: fixed; }
+.train-table th,
+.train-table td,
+.train-table th:last-child,
+.train-table td:last-child {
+  text-align: center !important;
+  vertical-align: middle;
+}
+.train-table th { white-space: normal; }
+.train-table td {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.train-table th:first-child,
+.train-table td:first-child { width: 34%; }
+.train-table th:nth-child(2),
+.train-table td:nth-child(2) { width: 32%; }
+.train-table th:nth-child(3),
+.train-table td:nth-child(3) { width: 34%; }
+
+/* Station checkboxes */
+.station-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.station-checks label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.station-checks input[type=checkbox] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 36px;
+  padding: 20px 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  border-top: 1px solid var(--line);
+}
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.footer a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 650px) {
+  main { margin: 0 auto; padding: 14px 12px 40px; }
+  .panel { padding: 16px; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  th, td { padding: 10px 6px; font-size: 13px; }
+  .spinner .value { font-size: 24px; min-width: 36px; }
+  .duration-picker .spinner .value { font-size: 22px; }
+}
+@media (max-width: 480px) {
+  .train-table th, .train-table td { padding: 10px 4px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+<main>
+<header class="head" id="pageHeader" title="Click to refresh">
+  <h1>Weekly Hours Tracker</h1>
+  <div id="weekBanner"></div>
+</header>
+
 <section class="panel">
- <div class="controls">
-  <div class="field"><label for="csv">Upload attendance CSV</label><input id="csv" type="file" accept=".csv,text/csv,text/comma-separated-values,application/vnd.ms-excel,text/plain" multiple></div>
-  <button id="sample" class="secondary" type="button">Load CSV data</button>
- </div>
- <div id="notice" class="message hidden"></div>
+  <div class="controls">
+    <div class="field">
+      <label for="csv">Upload attendance CSV</label>
+      <input id="csv" type="file" accept=".csv,text/csv,text/comma-separated-values,application/vnd.ms-excel,text/plain" multiple>
+    </div>
+    <button id="sample" class="secondary" type="button">Load CSV data</button>
+  </div>
+  <div id="notice" class="message hidden"></div>
 </section>
+
 <section id="results" class="hidden">
- <section class="panel">
-  <div class="rowflex"><h2 style="margin:0">Week breakdown</h2><span id="weekTitle" class="tag"></span></div>
-  <div class="tablewrap"><table><thead><tr><th>Day</th><th class="checkcell">Mark leave</th><th>Attendance</th><th>Hours</th></tr></thead><tbody id="daysBody"></tbody></table></div>
- </section>
- <section class="panel" id="summaryPanel">
-  <h2>Week summary</h2>
-  <div class="stats">
-   <div class="stat"><small>Hours completed</small><strong id="worked">0:00</strong></div>
-   <div class="stat"><small>Hours required</small><strong id="required">42:30</strong></div>
-   <div class="stat"><small>Balance</small><strong id="balance">−42:30</strong></div>
-   <div class="stat"><small>Working days counted</small><strong id="daysCount">5</strong></div>
-  </div>
-  <div class="progress"><div id="bar"></div></div><div id="summary" class="message"></div>
- </section>
- <section class="panel">
-  <h2 id="planTitle">Plan today</h2>
-  <div class="plannergrid">
-   <div class="field"><label for="entryTime">Entry time</label><input id="entryTime" type="time" step="60"></div>
-   <div class="field"><label for="leaveTime">Planned exit time</label><input id="leaveTime" type="time" step="60"></div>
-  </div>
-  <div id="todayPlan" class="message">Enter your entry and planned exit time.</div>
-  <div class="rowflex" style="margin-top:12px"><span class="hint">Save today's plan into this week's data.</span><button id="addToday" type="button">Add to current data</button></div>
-  <div id="savedNotice" class="hint" style="margin-top:8px"></div>
- </section>
- <section class="panel"><h2>Trains towards Dadar</h2><div class="controls">
- <label style="display:flex;align-items:center;gap:7px;color:var(--ink)"><input type="checkbox" id="lowerCheck" checked> Lower Parel · Western line</label>
- <label style="display:flex;align-items:center;gap:7px;color:var(--ink)"><input type="checkbox" id="curreyCheck"> Currey Road · Central line</label></div>
- <div id="trains" style="margin-top:12px"></div><div class="hint">Illustrative timetable data only. Rely on the official railway website or authorised railway sources for actual train timings and service updates.</div></section>
+  <section class="panel">
+    <div class="rowflex">
+      <h2 style="margin:0">Week breakdown</h2>
+      <span id="weekTitle" class="tag"></span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th class="checkcell">Mark leave</th>
+            <th>Attendance</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody id="daysBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="summaryPanel">
+    <h2>Week summary</h2>
+    <div class="stats">
+      <div class="stat"><small>Hours completed</small><strong id="worked">0:00</strong></div>
+      <div class="stat"><small>Hours required</small><strong id="required">42:30</strong></div>
+      <div class="stat"><small>Balance</small><strong id="balance">−42:30</strong></div>
+      <div class="stat"><small>Working days</small><strong id="daysCount">5</strong></div>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div id="summary" class="message"></div>
+  </section>
+
+  <section class="panel">
+    <h2 id="planTitle">Plan today</h2>
+    <div class="plannergrid">
+      <!-- Entry time picker -->
+      <div class="time-picker" id="entryPicker">
+        <div class="picker-label">Entry time</div>
+        <div class="time-row">
+          <div class="spinner" data-target="entryH" data-max="23" data-min="0">
+            <button type="button" class="spin-up" aria-label="Increase hour">▴</button>
+            <div class="value" id="entryH">09</div>
+            <button type="button" class="spin-down" aria-label="Decrease hour">▾</button>
+          </div>
+          <span class="colon">:</span>
+          <div class="spinner" data-target="entryM" data-max="59" data-min="0">
+            <button type="button" class="spin-up" aria-label="Increase minute">▴</button>
+            <div class="value" id="entryM">00</div>
+            <button type="button" class="spin-down" aria-label="Decrease minute">▾</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Duration picker (default 8h 30m) -->
+      <div class="time-picker duration-picker" id="durationPicker">
+        <div class="picker-label">Work duration</div>
+        <div class="hint" style="margin:-4px 0 8px;font-size:11px">Default 8 hrs 30 min · adjusts exit</div>
+        <div class="time-row">
+          <div class="spinner" data-target="durH" data-max="16" data-min="0">
+            <button type="button" class="spin-up" aria-label="Increase hours">▴</button>
+            <div class="value" id="durH">8</div>
+            <button type="button" class="spin-down" aria-label="Decrease hours">▾</button>
+            <div class="duration-unit">hrs</div>
+          </div>
+          <span class="colon">:</span>
+          <div class="spinner" data-target="durM" data-max="59" data-min="0" data-step="5">
+            <button type="button" class="spin-up" aria-label="Increase minutes">▴</button>
+            <div class="value" id="durM">30</div>
+            <button type="button" class="spin-down" aria-label="Decrease minutes">▾</button>
+            <div class="duration-unit">min</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exit time (computed, also adjustable) -->
+      <div class="time-picker exit-display" id="exitPicker">
+        <div class="picker-label">Planned exit time</div>
+        <div class="time-row">
+          <div class="spinner" data-target="exitH" data-max="23" data-min="0">
+            <button type="button" class="spin-up" aria-label="Increase hour">▴</button>
+            <div class="value" id="exitH">17</div>
+            <button type="button" class="spin-down" aria-label="Decrease hour">▾</button>
+          </div>
+          <span class="colon">:</span>
+          <div class="spinner" data-target="exitM" data-max="59" data-min="0">
+            <button type="button" class="spin-up" aria-label="Increase minute">▴</button>
+            <div class="value" id="exitM">30</div>
+            <button type="button" class="spin-down" aria-label="Decrease minute">▾</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden native inputs for compatibility with existing logic -->
+    <input type="hidden" id="entryTime" value="09:00">
+    <input type="hidden" id="leaveTime" value="17:30">
+
+    <div id="todayPlan" class="message">Enter your entry and planned exit time.</div>
+    <div class="rowflex" style="margin-top:14px">
+      <span class="hint">Save today's plan into this week's data.</span>
+      <button id="addToday" type="button">Add to current data</button>
+    </div>
+    <div id="savedNotice" class="hint" style="margin-top:8px"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Trains towards Dadar</h2>
+    <div class="station-checks">
+      <label><input type="checkbox" id="lowerCheck" checked> Lower Parel · Western line</label>
+      <label><input type="checkbox" id="curreyCheck"> Currey Road · Central line</label>
+    </div>
+    <div id="trains" style="margin-top:14px"></div>
+    <div class="hint" style="margin-top:10px">Illustrative timetable data only. Rely on the official railway website or authorised railway sources for actual train timings and service updates.</div>
+  </section>
 </section>
-<footer class="footer">Developed by Tushar Pandey<br><br>Hey! explore more websites from the same developer<br><a style="color:var(--accent)" href="https://epspension.in" target="_blank" rel="noopener">epspension.in</a> &nbsp;·&nbsp; <a style="color:var(--accent)" href="https://kavyapath.com" target="_blank" rel="noopener">kavyapath.com</a></footer>
+
+<footer class="footer">
+  © Developed by Tushar Pandey<br><br>
+  Hey! explore more websites from the same developer<br>
+  <a href="https://epspension.in" target="_blank" rel="noopener">epspension.in</a>
+  &nbsp;·&nbsp;
+  <a href="https://kavyapath.com" target="_blank" rel="noopener">kavyapath.com</a>
+</footer>
+</main>
+
 <script>
-const DAILY=510,WEEKLY=2550;
-const HOLIDAYS={"2026-01-26":"Republic Day","2026-03-03":"Holi (Dhulivandan)","2026-03-19":"Gudi Padava","2026-03-21":"Id-ul-Fitr (Ramzan Id)","2026-03-31":"Mahavir Jayanti","2026-04-03":"Good Friday","2026-05-01":"Buddha Purnima","2026-05-27":"Id-ul-Zuha (Bakri Id)","2026-06-26":"Muharram","2026-08-15":"Independence Day","2026-08-26":"Id-e-Milad","2026-09-14":"Ganesh Chaturthi/Vinayak Chaturthi","2026-10-02":"Mahatma Gandhi's Birthday","2026-10-20":"Dussehra (Vijayadashami)","2026-11-08":"Diwali (Deepavali)","2026-11-24":"Guru Nanak's Birthday","2026-12-25":"Christmas Day"};
-const $=id=>document.getElementById(id);let attendance={},leaves={},registered={},plans={},csvLoaded=false;
-function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function parseDate(s){s=String(s||'').trim();let m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;let d=new Date(s);return isNaN(d)?null:iso(d)}
-function parseCSV(text){let found={};const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());for(const line of lines){let cols=[],cur='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){cur+='"';i++}else q=!q}else if(c===','&&!q){cols.push(cur);cur=''}else cur+=c}cols.push(cur);let date=parseDate(cols[1]);if(!date)continue;let times=cols.filter(v=>/^\d{1,3}:\d{2}:\d{2}$/.test(v.trim()));let dur=times[times.length-1]||'00:00:00';let m=dur.match(/^(\d+):(\d{2}):(\d{2})$/);found[date]=m?Number(m[1])*60+Number(m[2])+Number(m[3])/60:0}return found}
-function fmt(n){n=Math.max(0,Math.round(n));return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`}
-function signed(n){return (n<0?'−':'+')+fmt(Math.abs(n))}
-function datesForWeek(s){let d=new Date(s+'T12:00:00');d.setDate(d.getDate()-((d.getDay()+6)%7));return Array.from({length:5},(_,i)=>{let x=new Date(d);x.setDate(d.getDate()+i);return x})}
-function currentWeek(){return iso(new Date())}
-function durationFor(k){if(registered[k])return DAILY;if(plans[k]!==undefined)return plans[k];if(Object.prototype.hasOwnProperty.call(attendance,k))return attendance[k];return 0}
-function isWorkday(k){let d=new Date(k+'T12:00:00');return d.getDay()!==0&&d.getDay()!==6&&!HOLIDAYS[k]}
-function render(){let selected=iso(new Date());let dates=datesForWeek(selected),body=$('daysBody');body.innerHTML='';let worked=0,required=0,count=0;
-$('weekTitle').textContent=`${dates[0].toLocaleDateString('en-IN',{day:'numeric',month:'short'})} – ${dates[4].toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}`;$('weekBanner').textContent='Current week · '+$('weekTitle').textContent;
-for(const d of dates){let k=iso(d),holiday=HOLIDAYS[k],hasCSV=Object.prototype.hasOwnProperty.call(attendance,k),isReg=!!registered[k],mins=durationFor(k);if(!holiday&&!leaves[k]){required+=DAILY;count++}worked+=mins;
-let tr=document.createElement('tr');tr.dataset.key=k;let cbDisabled=!!holiday||hasCSV||isReg;let label=holiday?holiday:(plans[k]!==undefined?'<span class="attendance-manual">Manually added</span>':hasCSV?'CSV record':isReg?'Muster':'Working day');
-tr.innerHTML=`<td><div class="day">${d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</div>${holiday?'<div class="sub">'+holiday+'</div>':''}</td><td class="checkcell"></td><td><span>${label}</span>${hasCSV?'<div class="sub attendance-imported">Attendance imported</div>':''}<div class="sub" style="margin-top:4px"><label style="font-weight:500"><input type="checkbox" class="reg" ${isReg?'checked':''} ${holiday?'disabled':''}> Muster</label></div></td><td class="duration">${fmt(mins)}</td>`;
-let cb=document.createElement('input');cb.type='checkbox';cb.checked=!!leaves[k];cb.disabled=cbDisabled;cb.title=hasCSV?'CSV attendance exists':holiday?'Public holiday':'';tr.children[1].appendChild(cb);cb.addEventListener('change',()=>{leaves[k]=cb.checked;render()});let reg=tr.querySelector('.reg');reg.addEventListener('change',()=>{registered[k]=reg.checked;if(reg.checked)leaves[k]=false;render()});body.appendChild(tr)}
-$('worked').textContent=fmt(worked);$('required').textContent=fmt(required);$('balance').textContent=signed(worked-required);$('balance').style.color=worked>=required?'var(--good)':'var(--bad)';$('daysCount').textContent=count;$('bar').style.width=(required?Math.min(100,worked/required*100):100)+'%';$('summary').className='message '+(worked>=required?'good':'');let todayKey=iso(new Date()),future=dates.filter(d=>iso(d)>todayKey&&!HOLIDAYS[iso(d)]&&!leaves[iso(d)]).length;
-$('summary').textContent=worked>=required?`Target met. You are ${fmt(worked-required)} above the required hours.`:`You need ${fmt(required-worked)} more hours${future?` in the next ${future} working day${future===1?'':'s'}`:''}.`;
-$('results').classList.remove('hidden');$('planTitle').textContent='Plan today · '+new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});updatePlan()}
-function updatePlan(){let entry=$('entryTime').value,exit=$('leaveTime').value;if(!entry||!exit){$('todayPlan').textContent='Enter your entry and planned exit time.';return}let a=Number(entry.slice(0,2))*60+Number(entry.slice(3,5)),b=Number(exit.slice(0,2))*60+Number(exit.slice(3,5));if(b<=a){$('todayPlan').className='message bad';$('todayPlan').textContent='Planned exit must be later than entry.';return}let today=iso(new Date()),planned=b-a;let existing=durationFor(today);let prior=Object.prototype.hasOwnProperty.call(attendance,today)||registered[today]||plans[today]!==undefined;$('todayPlan').className='message';$('todayPlan').textContent=`Planned time: ${fmt(planned)}. ${planned>=DAILY?'Daily benchmark covered.':'You are '+fmt(DAILY-planned)+' short of the daily benchmark.'} ${prior?'A record already exists for today; adding this plan will replace today’s saved plan only.':''}`;window.todayPlanned=planned;renderTrains()}
-$('csv').addEventListener('change',async e=>{let files=Array.from(e.target.files||[]);if(!files.length)return;if(files.length>2){$('notice').className='message bad';$('notice').textContent='Please select no more than two CSV files.';e.target.value='';return}attendance={};for(const f of files)Object.assign(attendance,parseCSV(await f.text()));leaves={};registered={};plans={};csvLoaded=true;render();const weekDates=datesForWeek(iso(new Date()));const inWeek=weekDates.some(d=>Object.prototype.hasOwnProperty.call(attendance,iso(d)));$('notice').className='message '+(inWeek?'good':'bad');$('notice').textContent=Object.keys(attendance).length===0?'No attendance data found. Export attendance data and upload above.':inWeek?'Data fetched successfully.': 'No attendance data found for the current week. Check the CSV file and upload the proper data.';});
-$('entryTime').addEventListener('change',updatePlan);$('leaveTime').addEventListener('change',()=>{updatePlan();renderTrains()});
-$('addToday').addEventListener('click',()=>{let today=iso(new Date());if(!window.todayPlanned){updatePlan();if(!window.todayPlanned)return}plans[today]=window.todayPlanned;$('savedNotice').textContent='Today’s planned duration has been added to this week’s data.';render()});
-$('sample').addEventListener('click',()=>{const picker=$('csv');try{if(typeof picker.showPicker==='function'){picker.showPicker();return}}catch(err){}picker.click()});
+const DAILY = 510, WEEKLY = 2550;
+const HOLIDAYS = {"2026-01-26":"Republic Day","2026-03-03":"Holi (Dhulivandan)","2026-03-19":"Gudi Padava","2026-03-21":"Id-ul-Fitr (Ramzan Id)","2026-03-31":"Mahavir Jayanti","2026-04-03":"Good Friday","2026-05-01":"Buddha Purnima","2026-05-27":"Id-ul-Zuha (Bakri Id)","2026-06-26":"Muharram","2026-08-15":"Independence Day","2026-08-26":"Id-e-Milad","2026-09-14":"Ganesh Chaturthi/Vinayak Chaturthi","2026-10-02":"Mahatma Gandhi's Birthday","2026-10-20":"Dussehra (Vijayadashami)","2026-11-08":"Diwali (Deepavali)","2026-11-24":"Guru Nanak's Birthday","2026-12-25":"Christmas Day"};
+const $ = id => document.getElementById(id);
+let attendance = {}, leaves = {}, registered = {}, plans = {}, csvLoaded = false;
 
-function minuteOf(t){let p=t.split(':').map(Number);return p[0]*60+p[1]}
-function timeText(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+/* ── Header refresh ── */
+$('pageHeader').addEventListener('click', () => location.reload());
 
+/* ── Helpers ── */
+function iso(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function parseDate(s) {
+  s = String(s || '').trim();
+  let m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+  if (m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  let d = new Date(s);
+  return isNaN(d) ? null : iso(d);
+}
+function parseCSV(text) {
+  let found = {};
+  const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/).filter(x => x.trim());
+  for (const line of lines) {
+    let cols = [], cur = '', q = false;
+    for (let i = 0; i < line.length; i++) {
+      let c = line[i];
+      if (c === '"') {
+        if (q && line[i+1] === '"') { cur += '"'; i++; }
+        else q = !q;
+      } else if (c === ',' && !q) { cols.push(cur); cur = ''; }
+      else cur += c;
+    }
+    cols.push(cur);
+    let date = parseDate(cols[1]);
+    if (!date) continue;
+    let times = cols.filter(v => /^\d{1,3}:\d{2}:\d{2}$/.test(v.trim()));
+    let dur = times[times.length - 1] || '00:00:00';
+    let m = dur.match(/^(\d+):(\d{2}):(\d{2})$/);
+    found[date] = m ? Number(m[1]) * 60 + Number(m[2]) + Number(m[3]) / 60 : 0;
+  }
+  return found;
+}
+function fmt(n) {
+  n = Math.max(0, Math.round(n));
+  return `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`;
+}
+function fmtFriendly(n) {
+  n = Math.max(0, Math.round(n));
+  const h = Math.floor(n / 60);
+  const m = n % 60;
+  if (h === 0) return m === 1 ? '1 minute' : `${m} minutes`;
+  if (m === 0) return h === 1 ? '1 hour' : `${h} hours`;
+  const hs = h === 1 ? '1 hour' : `${h} hours`;
+  const ms = m === 1 ? '1 minute' : `${m} minutes`;
+  return `${hs} ${ms}`;
+}
+function signed(n) {
+  return (n < 0 ? '−' : '+') + fmt(Math.abs(n));
+}
+function signedFriendly(n) {
+  const abs = fmtFriendly(Math.abs(n));
+  return n < 0 ? `${abs} short` : `${abs} above`;
+}
+function datesForWeek(s) {
+  let d = new Date(s + 'T12:00:00');
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  return Array.from({ length: 5 }, (_, i) => {
+    let x = new Date(d);
+    x.setDate(d.getDate() + i);
+    return x;
+  });
+}
+function currentWeek() { return iso(new Date()); }
+function durationFor(k) {
+  if (registered[k]) return DAILY;
+  if (plans[k] !== undefined) return plans[k];
+  if (Object.prototype.hasOwnProperty.call(attendance, k)) return attendance[k];
+  return 0;
+}
+function isWorkday(k) {
+  let d = new Date(k + 'T12:00:00');
+  return d.getDay() !== 0 && d.getDay() !== 6 && !HOLIDAYS[k];
+}
+function minuteOf(t) {
+  let p = t.split(':').map(Number);
+  return p[0] * 60 + p[1];
+}
+function timeText(m) {
+  m = ((m % 1440) + 1440) % 1440;
+  return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+}
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+/* ── Custom time spinners ── */
+let timeState = { entryH: 9, entryM: 0, durH: 8, durM: 30, exitH: 17, exitM: 30 };
+let adjustingFromDuration = false;
+
+function syncHiddenInputs() {
+  $('entryTime').value = pad2(timeState.entryH) + ':' + pad2(timeState.entryM);
+  $('leaveTime').value = pad2(timeState.exitH) + ':' + pad2(timeState.exitM);
+}
+
+function updateDisplay(id) {
+  const el = $(id);
+  if (!el) return;
+  if (id === 'durH') el.textContent = timeState.durH;
+  else el.textContent = pad2(timeState[id]);
+}
+
+function setFromDuration() {
+  adjustingFromDuration = true;
+  const entryMin = timeState.entryH * 60 + timeState.entryM;
+  const durMin = timeState.durH * 60 + timeState.durM;
+  const exitMin = (entryMin + durMin) % 1440;
+  timeState.exitH = Math.floor(exitMin / 60);
+  timeState.exitM = exitMin % 60;
+  updateDisplay('exitH');
+  updateDisplay('exitM');
+  syncHiddenInputs();
+  adjustingFromDuration = false;
+  updatePlan();
+}
+
+function setDurationFromExit() {
+  if (adjustingFromDuration) return;
+  const entryMin = timeState.entryH * 60 + timeState.entryM;
+  let exitMin = timeState.exitH * 60 + timeState.exitM;
+  let dur = exitMin - entryMin;
+  if (dur < 0) dur += 1440;
+  timeState.durH = Math.floor(dur / 60);
+  timeState.durM = dur % 60;
+  // Clamp duration hours to 16
+  if (timeState.durH > 16) { timeState.durH = 16; timeState.durM = 0; }
+  updateDisplay('durH');
+  updateDisplay('durM');
+}
+
+function changeValue(target, delta) {
+  const el = document.querySelector(`.spinner[data-target="${target}"]`);
+  const max = Number(el.dataset.max);
+  const min = Number(el.dataset.min);
+  const step = Number(el.dataset.step) || 1;
+  let v = timeState[target] + delta * step;
+  if (v > max) v = min + (v - max - 1) % (max - min + 1);
+  if (v < min) v = max - (min - v - 1) % (max - min + 1);
+  // For minutes with step 5, snap
+  if (step > 1) v = Math.round(v / step) * step;
+  if (v > max) v = min;
+  if (v < min) v = max;
+  timeState[target] = v;
+  updateDisplay(target);
+
+  if (target === 'entryH' || target === 'entryM' || target === 'durH' || target === 'durM') {
+    setFromDuration();
+  } else if (target === 'exitH' || target === 'exitM') {
+    setDurationFromExit();
+    syncHiddenInputs();
+    updatePlan();
+  }
+}
+
+// Wire up spinner buttons
+document.querySelectorAll('.spinner').forEach(sp => {
+  const target = sp.dataset.target;
+  sp.querySelector('.spin-up').addEventListener('click', e => {
+    e.stopPropagation();
+    changeValue(target, 1);
+  });
+  sp.querySelector('.spin-down').addEventListener('click', e => {
+    e.stopPropagation();
+    changeValue(target, -1);
+  });
+
+  // Mouse wheel / trackpad on the value
+  const valEl = sp.querySelector('.value');
+  valEl.addEventListener('wheel', e => {
+    e.preventDefault();
+    changeValue(target, e.deltaY < 0 ? 1 : -1);
+  }, { passive: false });
+
+  // Drag to change (simple vertical drag)
+  let dragStartY = null;
+  let dragStartVal = null;
+  valEl.addEventListener('pointerdown', e => {
+    dragStartY = e.clientY;
+    dragStartVal = timeState[target];
+    valEl.setPointerCapture(e.pointerId);
+  });
+  valEl.addEventListener('pointermove', e => {
+    if (dragStartY === null) return;
+    const dy = dragStartY - e.clientY;
+    const steps = Math.round(dy / 18);
+    if (steps !== 0) {
+      const step = Number(sp.dataset.step) || 1;
+      let v = dragStartVal + steps * step;
+      const max = Number(sp.dataset.max);
+      const min = Number(sp.dataset.min);
+      if (v > max) v = min + (v - max - 1) % (max - min + 1);
+      if (v < min) v = max - (min - v - 1) % (max - min + 1);
+      if (step > 1) v = Math.round(v / step) * step;
+      if (v > max) v = min;
+      if (v < min) v = max;
+      if (v !== timeState[target]) {
+        timeState[target] = v;
+        updateDisplay(target);
+        if (target.startsWith('entry') || target.startsWith('dur')) setFromDuration();
+        else {
+          setDurationFromExit();
+          syncHiddenInputs();
+          updatePlan();
+        }
+      }
+    }
+  });
+  valEl.addEventListener('pointerup', () => { dragStartY = null; });
+  valEl.addEventListener('pointercancel', () => { dragStartY = null; });
+});
+
+/* ── Core render ── */
+function render() {
+  let selected = iso(new Date());
+  let dates = datesForWeek(selected), body = $('daysBody');
+  body.innerHTML = '';
+  let worked = 0, required = 0, count = 0;
+  $('weekTitle').textContent = `${dates[0].toLocaleDateString('en-IN',{day:'numeric',month:'short'})} – ${dates[4].toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}`;
+  $('weekBanner').textContent = 'Current week · ' + $('weekTitle').textContent;
+  for (const d of dates) {
+    let k = iso(d), holiday = HOLIDAYS[k], hasCSV = Object.prototype.hasOwnProperty.call(attendance, k),
+        isReg = !!registered[k], mins = durationFor(k);
+    if (!holiday && !leaves[k]) { required += DAILY; count++; }
+    worked += mins;
+    let tr = document.createElement('tr');
+    tr.dataset.key = k;
+    let cbDisabled = !!holiday || hasCSV || isReg;
+    let label = holiday ? holiday : (plans[k] !== undefined ? '<span class="attendance-manual">Manually added</span>' : hasCSV ? 'CSV record' : isReg ? 'Muster' : 'Working day');
+    tr.innerHTML = `<td><div class="day">${d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</div>${holiday ? '<div class="sub">' + holiday + '</div>' : ''}</td><td class="checkcell"></td><td><span>${label}</span>${hasCSV ? '<div class="sub attendance-imported">Attendance imported</div>' : ''}<div class="sub" style="margin-top:4px"><label style="font-weight:500"><input type="checkbox" class="reg" ${isReg ? 'checked' : ''} ${holiday ? 'disabled' : ''}> Muster</label></div></td><td class="duration">${fmt(mins)}</td>`;
+    let cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = !!leaves[k];
+    cb.disabled = cbDisabled;
+    cb.title = hasCSV ? 'CSV attendance exists' : holiday ? 'Public holiday' : '';
+    tr.children[1].appendChild(cb);
+    cb.addEventListener('change', () => { leaves[k] = cb.checked; render(); });
+    let reg = tr.querySelector('.reg');
+    reg.addEventListener('change', () => {
+      registered[k] = reg.checked;
+      if (reg.checked) leaves[k] = false;
+      render();
+    });
+    body.appendChild(tr);
+  }
+  $('worked').textContent = fmt(worked);
+  $('required').textContent = fmt(required);
+  $('balance').textContent = signed(worked - required);
+  $('balance').style.color = worked >= required ? 'var(--good)' : 'var(--bad)';
+  $('daysCount').textContent = count;
+  $('bar').style.width = (required ? Math.min(100, worked / required * 100) : 100) + '%';
+  $('summary').className = 'message ' + (worked >= required ? 'good' : '');
+  let todayKey = iso(new Date()),
+      future = dates.filter(d => iso(d) > todayKey && !HOLIDAYS[iso(d)] && !leaves[iso(d)]).length;
+  $('summary').textContent = worked >= required
+    ? `Target met. You are ${fmtFriendly(worked - required)} above the required ${fmtFriendly(required)}.`
+    : `You need ${fmtFriendly(required - worked)} more${future ? ` in the next ${future} working day${future === 1 ? '' : 's'}` : ''}.`;
+  $('results').classList.remove('hidden');
+  $('planTitle').textContent = 'Plan today · ' + new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  updatePlan();
+}
+
+function updatePlan() {
+  let entry = $('entryTime').value, exit = $('leaveTime').value;
+  if (!entry || !exit) {
+    $('todayPlan').textContent = 'Enter your entry and planned exit time.';
+    return;
+  }
+  let a = Number(entry.slice(0, 2)) * 60 + Number(entry.slice(3, 5));
+  let b = Number(exit.slice(0, 2)) * 60 + Number(exit.slice(3, 5));
+  if (b <= a) {
+    // Allow overnight? For simplicity treat as next day for display, but warn if same-day short
+    // Keep previous behaviour for now
+  }
+  let today = iso(new Date());
+  let planned = b - a;
+  if (planned <= 0) planned += 1440;
+  let existing = durationFor(today);
+  let prior = Object.prototype.hasOwnProperty.call(attendance, today) || registered[today] || plans[today] !== undefined;
+  $('todayPlan').className = 'message';
+  if (planned < DAILY) {
+    $('todayPlan').className = 'message';
+    $('todayPlan').textContent = `Planned duration: ${fmtFriendly(planned)} (${fmt(planned)}). You are ${fmtFriendly(DAILY - planned)} short of the daily ${fmtFriendly(DAILY)} benchmark.${prior ? ' A record already exists for today; adding this plan will replace today’s saved plan only.' : ''}`;
+  } else {
+    $('todayPlan').className = 'message good';
+    $('todayPlan').textContent = `Planned duration: ${fmtFriendly(planned)} (${fmt(planned)}). Daily benchmark of ${fmtFriendly(DAILY)} covered.${prior ? ' A record already exists for today; adding this plan will replace today’s saved plan only.' : ''}`;
+  }
+  window.todayPlanned = planned;
+  renderTrains();
+}
+
+/* ── CSV ── */
+$('csv').addEventListener('change', async e => {
+  let files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  if (files.length > 2) {
+    $('notice').className = 'message bad';
+    $('notice').textContent = 'Please select no more than two CSV files.';
+    e.target.value = '';
+    return;
+  }
+  attendance = {};
+  for (const f of files) Object.assign(attendance, parseCSV(await f.text()));
+  leaves = {};
+  registered = {};
+  plans = {};
+  csvLoaded = true;
+  render();
+  const weekDates = datesForWeek(iso(new Date()));
+  const inWeek = weekDates.some(d => Object.prototype.hasOwnProperty.call(attendance, iso(d)));
+  $('notice').className = 'message ' + (inWeek ? 'good' : 'bad');
+  $('notice').textContent = Object.keys(attendance).length === 0
+    ? 'No attendance data found. Export attendance data and upload above.'
+    : inWeek
+      ? 'Data fetched successfully.'
+      : 'No attendance data found for the current week. Check the CSV file and upload the proper data.';
+});
+
+$('addToday').addEventListener('click', () => {
+  let today = iso(new Date());
+  if (!window.todayPlanned) {
+    updatePlan();
+    if (!window.todayPlanned) return;
+  }
+  plans[today] = window.todayPlanned;
+  $('savedNotice').textContent = 'Today’s plan has been saved to this week’s data.';
+  render();
+});
+
+$('sample').addEventListener('click', () => {
+  const picker = $('csv');
+  try {
+    if (typeof picker.showPicker === 'function') { picker.showPicker(); return; }
+  } catch (err) {}
+  picker.click();
+});
+
+/* ── Train data ── */
 const TRAIN_DATA = {
  lower: [
  ['13:01','13:06','BVI AC · Sat–Sun','Borivali'],['13:04','13:09','BVI','Borivali'],['13:10','13:15','BVI','Borivali'],['13:14','13:19','BVI','Borivali'],['13:18','13:23','BVI','Borivali'],['13:21','13:26','BVI','Borivali'],['13:24','13:29','VR AC','Virar'],['13:28','13:33','BVI','Borivali'],['13:32','13:37','BVI','Borivali'],['13:35','13:40','BYR','Bhayandar'],['13:39','13:44','GMN · Mon–Sat','Goregaon'],['13:43','13:48','BVI','Borivali'],['13:48','13:53','BVI','Borivali'],['13:54','13:59','BVI','Borivali'],['13:57','14:02','BA','Bandra'],['14:01','14:06','BVI','Borivali'],['14:04','14:09','BVI','Borivali'],['14:08','14:13','VR # AC','Virar'],['14:14','14:19','BVI','Borivali'],['14:18','14:23','GMN · Mon–Sat','Goregaon'],['14:24','14:29','BVI','Borivali'],['14:29','14:34','BVI','Borivali'],['14:33','14:38','BVI','Borivali'],['14:36','14:41','ADH · Mon–Sat','Andheri'],['14:40','14:45','BVI','Borivali'],['14:43','14:48','BYR','Bhayandar'],['14:46','14:51','BVI','Borivali'],['14:49','14:54','BVI · Mon–Sat','Borivali'],['14:53','14:58','BVI','Borivali'],['14:57','15:02','BVI','Borivali'],['15:01','15:06','GMN','Goregaon'],['15:05','15:10','BVI','Borivali'],['15:09','15:14','BVI','Borivali'],['15:13','15:18','GMN · Mon–Sat','Goregaon'],['15:16','15:21','BVI','Borivali'],['15:21','15:27','BVI AC · Sat–Sun','Borivali'],['15:26','15:31','BVI','Borivali'],['15:29','15:34','GMN','Goregaon'],['15:32','15:37','BVI','Borivali'],['15:35','15:40','BVI','Borivali'],['15:38','15:43','BVI','Borivali'],['15:42','15:47','GMN','Goregaon'],['15:48','15:53','BVI · Mon–Sat','Borivali'],['15:52','15:57','BSR','Vasai Road'],['15:57','16:02','BVI','Borivali'],
@@ -123,44 +1060,74 @@ const TRAIN_DATA = {
  ['19:01','19:07','C33 · Mon–Sat','Kurla'],['19:10','19:17','T107','Thane'],['19:15','19:21','K111','Kalyan'],['19:19','19:25','DL43 · Mon–Sat','Dombivli'],['19:26','19:32','K113','Kalyan'],['19:30','19:36','K115','Kalyan'],['19:34','19:40','T111','Thane'],['19:47','19:53','BL47','Badlapur'],['19:50','19:56','K119','Kalyan'],['19:57','20:03','T113 · Mon–Sat','Thane'],['20:02','20:08','BL49','Badlapur'],['20:07','20:13','T115','Thane'],['20:12','20:18','K121 AC','Kalyan'],['20:16','20:22','TL53','Titwala'],['20:22','20:28','T117 · Mon–Sat','Thane'],['20:25','20:31','A51','Ambernath'],['20:34','20:40','DL45 · Mon–Sat','Dombivli'],['20:38','20:44','K123','Kalyan'],['20:43','20:49','TL55','Titwala'],['20:46','20:52','T119 · Mon–Sat','Thane'],['20:50','20:56','A53','Ambernath'],['20:53','20:59','C35','Kurla'],['21:00','21:06','DL47 · Mon–Sat','Dombivli'],['21:04','21:10','T121','Thane'],['21:08','21:14','AN29','Asangaon'],['21:12','21:18','K125 · Mon–Sat','Kalyan'],['21:16','21:22','T123','Thane'],['21:20','21:26','BL51 AC','Badlapur'],['21:24','21:30','DL49','Dombivli'],['21:28','21:34','K127 AC · Mon–Sat','Kalyan'],['21:32','21:38','TL57','Titwala'],['21:40','21:46','BL53','Badlapur'],['21:44','21:50','N33','Kasara'],['21:48','21:54','C37 · Mon–Sat','Kurla'],['21:52','21:58','A57','Ambernath'],['21:56','22:02','BL55','Badlapur']
  ]
 };
-function renderTrains(){
- const n=$('trains'); if(!n)return;
- const exit=$('leaveTime').value||'17:30';
- const after=exit;
- const stations=[];
- if($('lowerCheck').checked)stations.push({key:'lower',title:'Lower Parel · Western line',station:'Lower Parel'});
- if($('curreyCheck').checked)stations.push({key:'currey',title:'Currey Road · Central line',station:'Currey Road'});
- n.innerHTML='';
- if(!stations.length){n.textContent='Select a station to view trains.';return}
- for(const s of stations){
-   const upcoming=TRAIN_DATA[s.key].filter(t=>minuteOf(t[0])>=minuteOf(after)&&minuteOf(t[0])<=minuteOf('22:00')).slice(0,10);
-   const div=document.createElement('div');div.style.marginBottom='18px';
-   const heading=document.createElement('h3');heading.textContent=s.title;div.appendChild(heading);
-   const note=document.createElement('div');note.className='hint';
-   note.textContent=`Departures from ${after} onwards · ${upcoming.length} shown · illustrative timetable`;
-   div.appendChild(note);
-   if(!upcoming.length){
-     const empty=document.createElement('p');empty.textContent='No listed departures remain in the 16:00–19:00 timetable after this time.';
-     div.appendChild(empty);
-   } else {
-     const wrap=document.createElement('div');wrap.className='tablewrap';
-     const table=document.createElement('table');table.className='train-table';
-     table.innerHTML=`<thead><tr><th>Train</th><th>${s.station} departure</th><th>Destination</th></tr></thead><tbody></tbody>`;
-     const tbody=table.querySelector('tbody');
-     for(const t of upcoming){
-       const tr=document.createElement('tr');
-       for(const value of [t[2],t[0],t[3]]){
-         const td=document.createElement('td');td.textContent=value;tr.appendChild(td);
-       }
-       tbody.appendChild(tr);
-     }
-     wrap.appendChild(table);div.appendChild(wrap);
-   }
-   n.appendChild(div);
- }
+
+function renderTrains() {
+  const n = $('trains');
+  if (!n) return;
+  const exit = $('leaveTime').value || '17:30';
+  const after = exit;
+  const stations = [];
+  if ($('lowerCheck').checked) stations.push({ key: 'lower', title: 'Lower Parel · Western line', station: 'Lower Parel' });
+  if ($('curreyCheck').checked) stations.push({ key: 'currey', title: 'Currey Road · Central line', station: 'Currey Road' });
+  n.innerHTML = '';
+  if (!stations.length) { n.textContent = 'Select a station to view trains.'; return; }
+  for (const s of stations) {
+    const upcoming = TRAIN_DATA[s.key].filter(t => minuteOf(t[0]) >= minuteOf(after) && minuteOf(t[0]) <= minuteOf('22:00')).slice(0, 10);
+    const div = document.createElement('div');
+    div.style.marginBottom = '18px';
+    const heading = document.createElement('h3');
+    heading.textContent = s.title;
+    div.appendChild(heading);
+    const note = document.createElement('div');
+    note.className = 'hint';
+    note.textContent = `Departures from ${after} onwards · ${upcoming.length} shown · illustrative timetable`;
+    div.appendChild(note);
+    if (!upcoming.length) {
+      const empty = document.createElement('p');
+      empty.textContent = 'No listed departures remain after this time.';
+      div.appendChild(empty);
+    } else {
+      const wrap = document.createElement('div');
+      wrap.className = 'tablewrap';
+      const table = document.createElement('table');
+      table.className = 'train-table';
+      table.innerHTML = `<thead><tr><th>Train</th><th>${s.station} departure</th><th>Destination</th></tr></thead><tbody></tbody>`;
+      const tbody = table.querySelector('tbody');
+      for (const t of upcoming) {
+        const tr = document.createElement('tr');
+        for (const value of [t[2], t[0], t[3]]) {
+          const td = document.createElement('td');
+          td.textContent = value;
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+      wrap.appendChild(table);
+      div.appendChild(wrap);
+    }
+    n.appendChild(div);
+  }
 }
-$('curreyCheck').addEventListener('change',renderTrains);$('lowerCheck').addEventListener('change',renderTrains);
+$('curreyCheck').addEventListener('change', renderTrains);
+$('lowerCheck').addEventListener('change', renderTrains);
 
+/* ── Init ── */
+(function init() {
+  const now = new Date();
+  let entryDefault = now.getHours() * 60 + now.getMinutes();
+  timeState.entryH = Math.floor(entryDefault / 60) % 24;
+  timeState.entryM = entryDefault % 60;
+  timeState.durH = 8;
+  timeState.durM = 30;
+  const exitDefault = (entryDefault + 510) % 1440;
+  timeState.exitH = Math.floor(exitDefault / 60);
+  timeState.exitM = exitDefault % 60;
 
-currentWeek();let now=new Date();let entryDefault=now.getHours()*60+now.getMinutes();$('entryTime').value=String(Math.floor(entryDefault/60)%24).padStart(2,'0')+':'+String(entryDefault%60).padStart(2,'0');let exitDefault=(entryDefault+510)%1440;$('leaveTime').value=String(Math.floor(exitDefault/60)).padStart(2,'0')+':'+String(exitDefault%60).padStart(2,'0');renderTrains();render();
-</script></main></body></html>
+  ['entryH', 'entryM', 'durH', 'durM', 'exitH', 'exitM'].forEach(updateDisplay);
+  syncHiddenInputs();
+  renderTrains();
+  render();
+})();
+</script>
+</body>
+</html>
