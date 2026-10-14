@@ -2,151 +2,73 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Weekly Office Hours Tracker</title>
+<title>Weekly Hours Tracker</title>
 <style>
-:root{--ink:#172033;--muted:#64748b;--line:#e2e8f0;--bg:#f4f7fb;--blue:#2457d6;--green:#087f5b;--red:#b42318}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink)}
-main{max-width:980px;margin:32px auto;padding:0 16px}.hero{margin-bottom:20px}.hero h1{margin:0 0 6px;font-size:clamp(25px,4vw,34px)}.hero p{margin:0;color:var(--muted)}
-.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 4px 18px #17203308}
-.controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px}label{font-weight:650;font-size:13px}input[type=file],input[type=date],button{font:inherit}input[type=date]{border:1px solid #cbd5e1;border-radius:9px;padding:10px;background:white}input[type=file]{max-width:100%}
-button{border:0;border-radius:9px;background:var(--blue);color:white;padding:10px 15px;font-weight:700;cursor:pointer}button.secondary{background:#e8eefc;color:#2448a8}.note{font-size:13px;color:var(--muted);margin-top:8px}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{padding:14px;background:#f8fafc;border:1px solid var(--line);border-radius:12px}.stat small{display:block;color:var(--muted);font-weight:600}.stat strong{font-size:clamp(19px,3vw,27px);display:block;margin-top:4px;font-variant-numeric:tabular-nums}
-.progress{height:10px;background:#e8edf5;border-radius:99px;overflow:hidden;margin-top:14px}.progress>div{height:100%;background:var(--green);width:0%;transition:width .2s}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.day{font-weight:700}.sub{font-size:12px;color:var(--muted)}.off{color:var(--muted)}.checkcell{text-align:center!important}.checkcell input{width:18px;height:18px;vertical-align:middle;accent-color:var(--blue)}.duration{font-variant-numeric:tabular-nums;font-weight:650}.status{font-size:12px;padding:4px 8px;border-radius:20px;background:#f1f5f9;white-space:nowrap}.status.holiday{background:#fff1db;color:#8a4b00}.status.weekend{background:#f1f5f9;color:#64748b}
-.message{padding:12px 14px;border-radius:10px;background:#eff6ff;color:#1d4ed8;margin-top:12px}.error{background:#fff1f2;color:#9f1239}.good{background:#e9fbf2;color:#066647}.hidden{display:none}
-@media(max-width:640px){main{margin:20px auto}.panel{padding:14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}th,td{padding:10px 4px;font-size:13px}.sub{font-size:11px}.status{white-space:normal}}
-</style>
-</head>
-<body><main>
-<header class="hero"><h1>Weekly Office Hours Tracker</h1><p>Upload your attendance CSV to see how many hours you've completed against the 42 hours 30 minutes weekly requirement.</p></header>
+:root{color-scheme:dark;--bg:#0b1120;--panel:#131c2e;--panel2:#1a263b;--ink:#edf3ff;--muted:#9aaac2;--line:#2a3850;--accent:#82aaff;--good:#56d6a0;--bad:#ff8585;--warn:#f5c56b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:980px;margin:24px auto;padding:0 15px}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}h1{font-size:clamp(25px,4vw,33px);margin:0}h2{font-size:19px;margin:0 0 14px}h3{font-size:16px;margin:0 0 12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin:13px 0}.controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px}label{font-size:13px;font-weight:650;color:var(--muted)}input,button{font:inherit}input[type=file],input[type=date],input[type=time]{max-width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:var(--panel2);color:var(--ink)}button{border:0;border-radius:9px;padding:10px 15px;background:var(--accent);color:#091225;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}.hint{font-size:12px;color:var(--muted)}.message{padding:12px 14px;border-radius:10px;background:#1b3150;color:#d8e8ff;margin-top:12px}.message.good{background:#123b31;color:#a6f4d1}.message.bad{background:#451f2a;color:#ffc0c0}.hidden{display:none}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:var(--panel2);border:1px solid var(--line);padding:13px;border-radius:11px}.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:clamp(20px,3vw,27px);margin-top:4px;font-variant-numeric:tabular-nums}.progress{height:8px;background:#27354c;border-radius:20px;overflow:hidden;margin-top:14px}.progress>div{height:100%;background:var(--good);width:0}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}td:last-child,th:last-child{text-align:right}.day{font-weight:700}.sub{font-size:11px;color:var(--muted)}.checkcell{text-align:center!important}.checkcell input{width:17px;height:17px;accent-color:var(--accent);vertical-align:middle}.duration{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}.tag{font-size:11px;color:var(--muted)}.plannergrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0 26px}.rowflex{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:650px){main{margin:16px auto}.panel{padding:13px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.plannergrid{grid-template-columns:1fr}th,td{padding:9px 5px;font-size:12px}}
+</style></head><body><main>
+<header class="head"><h1>Weekly Hours Tracker</h1></header>
 <section class="panel">
-<div class="controls">
-<div class="field"><label for="csv">Attendance CSV</label><input id="csv" type="file" accept=".csv,text/csv"></div>
-<div class="field"><label for="week">Choose a date in the week</label><input id="week" type="date"></div>
-<button id="loadSample" class="secondary" type="button">Load example</button>
-</div>
-<div class="note">Your file is processed locally in this browser; it is not uploaded to a server. The current week is selected automatically when you open the tool.</div>
-<div id="notice" class="message hidden"></div>
+ <div class="controls">
+  <div class="field"><label for="csv">Upload attendance CSV</label><input id="csv" type="file" accept=".csv,text/csv"></div>
+  <div class="field"><label for="week">Week</label><input id="week" type="date"></div>
+  <button id="sample" class="secondary" type="button">Try example</button>
+ </div>
+ <div id="notice" class="message hidden"></div>
 </section>
 <section id="results" class="hidden">
-<div class="panel">
-<div id="weekTitle" style="font-weight:800;font-size:18px;margin-bottom:14px"></div>
-<div class="stats">
-<div class="stat"><small>Hours completed</small><strong id="worked">0:00</strong></div>
-<div class="stat"><small>Hours required</small><strong id="required">42:30</strong></div>
-<div class="stat"><small>Balance</small><strong id="balance">−42:30</strong></div>
-<div class="stat"><small>Counted workdays</small><strong id="days">5</strong></div>
-</div><div class="progress"><div id="bar"></div></div>
-<div id="summary" class="message"></div>
-<div class="panel" style="padding:14px;margin:14px 0 0;background:#fbfdff">
-<h3 style="margin:0 0 10px;font-size:16px">Today’s exit-time planner</h3>
-<div class="controls">
-<div class="field"><label for="entryTime">Entry time</label><input id="entryTime" type="time" value="09:30"></div>
-<div class="field"><label for="leaveTime">Planned leaving time</label><input id="leaveTime" type="time" value="18:00"></div>
-</div>
-<div id="todayPlan" class="message" style="margin-top:12px">Choose your entry and leaving time.</div>
-<div class="note">This estimates time at the office from entry to exit. If your attendance system deducts breaks, adjust the estimate accordingly.</div>
-</div>
-</div>
-<div class="panel">
-<h2 style="font-size:18px;margin:0 0 4px">Week breakdown</h2>
-<p class="note" style="margin:0 0 10px">Uncheck a day if you took leave. Checked weekdays count toward the target; weekends and listed public holidays are excluded automatically. Each counted day adds 8 hours 30 minutes to the weekly requirement.</p>
-<div style="overflow-x:auto"><table><thead><tr><th>Day</th><th class="checkcell">Count day?</th><th>Attendance</th><th>Hours</th></tr></thead><tbody id="daysBody"></tbody></table></div>
-<div class="note">Attendance duration is read from the CSV's duration field. Missing dates count as 0 hours until you uncheck them or upload a fuller report.</div>
-</div></section>
-<footer class="note" style="text-align:center;padding:8px 0 28px">Public holidays preloaded from the supplied Maharashtra Central Government Offices holiday circular for 2026. You can edit <code>holidays.json</code> to update the list for another year.</footer>
-</main>
+ <section class="panel">
+  <div class="rowflex"><h2 style="margin:0">Week breakdown</h2><span id="weekTitle" class="tag"></span></div>
+  <div class="tablewrap"><table><thead><tr><th>Day</th><th class="checkcell">Mark leave</th><th>Attendance</th><th>Hours</th></tr></thead><tbody id="daysBody"></tbody></table></div>
+ </section>
+ <section class="panel">
+  <h2>Week summary</h2>
+  <div class="stats">
+   <div class="stat"><small>Hours completed</small><strong id="worked">0:00</strong></div>
+   <div class="stat"><small>Hours required</small><strong id="required">42:30</strong></div>
+   <div class="stat"><small>Balance</small><strong id="balance">−42:30</strong></div>
+   <div class="stat"><small>Working days counted</small><strong id="daysCount">5</strong></div>
+  </div>
+  <div class="progress"><div id="bar"></div></div><div id="summary" class="message"></div>
+ </section>
+ <section class="panel">
+  <h2 id="planTitle">Plan today</h2>
+  <div class="plannergrid">
+   <div class="field"><label for="entryTime">Entry time</label><input id="entryTime" type="time" step="60"></div>
+   <div class="field"><label for="leaveTime">Planned exit time</label><input id="leaveTime" type="time" step="60"></div>
+  </div>
+  <div id="todayPlan" class="message">Enter your entry and planned exit time.</div>
+  <div class="rowflex" style="margin-top:12px"><span class="hint">Save today's plan into this week's data.</span><button id="addToday" type="button">Add to current data</button></div>
+  <div id="savedNotice" class="hint" style="margin-top:8px"></div>
+ </section>
+</section>
+<footer class="footer">Developed by Tushar Pandey</footer>
 <script>
-const DAILY_TARGET=8*60+30, WEEKLY_TARGET=42*60+30;
-const HOLIDAYS={
-"2026-01-26":"Republic Day","2026-03-03":"Holi (Dhulivandan)","2026-03-19":"Gudi Padava",
-"2026-03-21":"Id-ul-Fitr (Ramzan Id)","2026-03-31":"Mahavir Jayanti","2026-04-03":"Good Friday",
-"2026-05-01":"Buddha Purnima","2026-05-27":"Id-ul-Zuha (Bakri Id)","2026-06-26":"Muharram",
-"2026-08-15":"Independence Day","2026-08-26":"Id-e-Milad","2026-09-14":"Ganesh Chaturthi/Vinayak Chaturthi",
-"2026-10-02":"Mahatma Gandhi's Birthday","2026-10-20":"Dussehra (Vijayadashami)",
-"2026-11-08":"Diwali (Deepavali)","2026-11-24":"Guru Nanak's Birthday","2026-12-25":"Christmas Day"
-};
-let attendance={};
-const $=id=>document.getElementById(id);
+const DAILY=510,WEEKLY=2550;
+const HOLIDAYS={"2026-01-26":"Republic Day","2026-03-03":"Holi (Dhulivandan)","2026-03-19":"Gudi Padava","2026-03-21":"Id-ul-Fitr (Ramzan Id)","2026-03-31":"Mahavir Jayanti","2026-04-03":"Good Friday","2026-05-01":"Buddha Purnima","2026-05-27":"Id-ul-Zuha (Bakri Id)","2026-06-26":"Muharram","2026-08-15":"Independence Day","2026-08-26":"Id-e-Milad","2026-09-14":"Ganesh Chaturthi/Vinayak Chaturthi","2026-10-02":"Mahatma Gandhi's Birthday","2026-10-20":"Dussehra (Vijayadashami)","2026-11-08":"Diwali (Deepavali)","2026-11-24":"Guru Nanak's Birthday","2026-12-25":"Christmas Day"};
+const $=id=>document.getElementById(id);let attendance={},leaves={},registered={},plans={},csvLoaded=false;
 function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function parseDate(s){let m=String(s||'').trim().match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;let d=new Date(s);return isNaN(d)?null:iso(d)}
-function minsFromDuration(s){let m=String(s||'').trim().match(/^(\d{1,3}):([0-5]\d):([0-5]\d)$/);return m?Number(m[1])*60+Number(m[2])+Number(m[3])/60:0}
-function parseCSV(text){
- const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());
- let found={};
- for(const line of lines){
-  // Attendance export has a report title line followed by quoted comma-separated rows.
-  const cols=[]; let cur='', quoted=false;
-  for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(c===','&&!quoted){cols.push(cur);cur=''}else cur+=c}cols.push(cur);
-  const date=parseDate(cols[1]); if(!date)continue;
-  // Standard export: date at column 2 and duration (HH:MM:SS) at column 15.
-  let duration=cols.find((v,i)=>i>=2&&/^\d{1,3}:\d{2}:\d{2}$/.test(v.trim()));
-  if(duration===undefined){const times=cols.filter(v=>/^\d{1,3}:\d{2}:\d{2}$/.test(v.trim()));duration=times[times.length-1]||'00:00:00'}
-  found[date]=minsFromDuration(duration);
- }
- return found;
-}
-function fmt(m){m=Math.max(0,Math.round(m));return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`}
-function signed(m){return (m<0?'−':'+')+fmt(Math.abs(m))}
-function weekDates(dateStr){let d=new Date(dateStr+'T12:00:00');let day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return Array.from({length:5},(_,i)=>{let x=new Date(d);x.setDate(d.getDate()+i);return x})}
-function render(){
- const selected=$('week').value;if(!selected)return;
- const dates=weekDates(selected), tbody=$('daysBody');tbody.innerHTML='';
- let worked=0, required=0, counted=0;
- $('weekTitle').textContent=`Week of ${dates[0].toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})} – ${dates[4].toLocaleDateString('en-IN',{day:'numeric',month:'short'})}`;
- dates.forEach((d)=>{
-  const key=iso(d), holiday=HOLIDAYS[key], mins=attendance[key]||0;
-  const checkedDefault=!holiday;
-  let cb=document.createElement('input');cb.type='checkbox';cb.checked=checkedDefault;cb.disabled=!!holiday || attendance[key]!==undefined;
-  cb.setAttribute('aria-label',`Count ${key} as a working day`);
-  const tr=document.createElement('tr');
-  let state=holiday?`<span class="status holiday">Public holiday</span>`:'<span class="status">Weekday</span>';
-  if(!holiday){required+=DAILY_TARGET;if(cb.checked){counted++;}}
-  worked+=(window.registered&&window.registered[key])?DAILY_TARGET:mins;
-  tr.innerHTML=`<td><div class="day">${d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</div><div class="sub">${holiday||''}</div></td><td class="checkcell"></td><td>${state}${attendance[key]===undefined?'<div class="sub">No CSV entry</div>':'<div class="sub">From CSV · checkbox locked</div>'}<div class="sub" style="margin-top:5px"><label style="font-weight:500"><input type="checkbox" class="register-entry" ${window.registered&&window.registered[key]?'checked':''} ${holiday?'disabled':''}> Register entry (credit 8:30)</label></div></td><td class="duration">${fmt(window.registered&&window.registered[key]?DAILY_TARGET:mins)}</td>`;
-  tr.children[1].appendChild(cb);
-  cb.addEventListener('change',()=>{renderWithOverrides();});
-  // retain current selection state while re-rendering
-  cb.dataset.key=key; tr.dataset.key=key; tbody.appendChild(tr);
-  const reg=tr.querySelector('.register-entry');
-  reg.addEventListener('change',()=>{window.registered=window.registered||{};window.registered[key]=reg.checked;render()});
- });
- // Apply manual overrides captured from the table before re-render.
- if(window.overrides){required=0;counted=0;dates.forEach(d=>{const k=iso(d);if(!HOLIDAYS[k]&&window.overrides[k]!==false){required+=DAILY_TARGET;counted++}})}
- $('worked').textContent=fmt(worked);$('required').textContent=fmt(required);
- const diff=worked-required;$('balance').textContent=signed(diff);$('days').textContent=counted;
- $('balance').style.color=diff>=0?'var(--green)':'var(--red)';
- $('bar').style.width=(required?Math.min(100,worked/required*100):100)+'%';
- $('summary').className='message '+(diff>=0?'good':'');
- $('summary').textContent=diff>=0?`Target met — you are ${fmt(diff)} above the required hours.`:`You need ${fmt(-diff)} more hours to meet this week's target.`;
- $('results').classList.remove('hidden'); updateTodayPlan();
- // Restore checkbox states based on manual overrides.
- tbody.querySelectorAll('tr').forEach(tr=>{const k=tr.dataset.key,cb=tr.querySelector('input');if(window.overrides&&Object.prototype.hasOwnProperty.call(window.overrides,k)&&!HOLIDAYS[k])cb.checked=window.overrides[k]});
-}
-window.overrides={}; window.registered={};
-function renderWithOverrides(){
- document.querySelectorAll('#daysBody tr').forEach(tr=>{const cb=tr.querySelector('input');if(cb)window.overrides[tr.dataset.key]=cb.checked});
- render();
-}
-$('csv').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{attendance=parseCSV(await f.text());window.overrides={};$('notice').className='message';$('notice').textContent=`Loaded ${Object.keys(attendance).length} attendance date(s) from ${f.name}.`;render()}catch(err){$('notice').className='message error';$('notice').textContent='Could not read this CSV. Please check the file format.'}});
-$('week').addEventListener('change',()=>{window.overrides={};render()});
-$('loadSample').addEventListener('click',()=>{attendance={'2026-10-12':8*60+51,'2026-10-13':8*60+9,'2026-10-14':8*60+30};window.overrides={};$('week').value='2026-10-14';$('notice').className='message';$('notice').textContent='Example attendance loaded. Upload your own CSV to replace it.';render()});
-function updateTodayPlan(){
- const now=new Date(), today=iso(now), entry=$('entryTime').value, leave=$('leaveTime').value;
- const selectedWeek=weekDates($('week').value||today).map(iso);
- const todayIsWeekday=selectedWeek.includes(today)&&!HOLIDAYS[today];
- const entryM=entry?Number(entry.slice(0,2))*60+Number(entry.slice(3,5)):null;
- const leaveM=leave?Number(leave.slice(0,2))*60+Number(leave.slice(3,5)):null;
- const expected=DAILY_TARGET;
- if(entryM===null||leaveM===null||leaveM<=entryM){$('todayPlan').className='message error';$('todayPlan').textContent='Please choose a leaving time later than your entry time.';return}
- const planned=leaveM-entryM;
- const delta=planned-expected;
- let futureDays=0, futureHours=0;
- const ds=weekDates($('week').value||today);
- ds.forEach(d=>{const k=iso(d);if(k>today&&!HOLIDAYS[k]&&d.getDay()!==0&&d.getDay()!==6&&!(window.overrides&&window.overrides[k]===false)) {futureDays++;futureHours+=DAILY_TARGET}});
- $('todayPlan').className='message';
- $('todayPlan').textContent=`Planned office duration: ${fmt(planned)}. ${delta>=0?'This is '+fmt(delta)+' above the daily 8:30 benchmark.':'This is '+fmt(-delta)+' short of the daily 8:30 benchmark.'} ${todayIsWeekday?'For the remaining weekdays this week, the baseline target is '+fmt(futureHours)+' across '+futureDays+' day(s).':'Today is outside the selected working week or is a listed holiday.'}`;
-}
-$('entryTime').addEventListener('change',updateTodayPlan);$('leaveTime').addEventListener('change',updateTodayPlan);
-$('week').value=iso(new Date()); 
-</script></body></html>
+function parseDate(s){s=String(s||'').trim();let m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;let d=new Date(s);return isNaN(d)?null:iso(d)}
+function parseCSV(text){let found={};const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());for(const line of lines){let cols=[],cur='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){cur+='"';i++}else q=!q}else if(c===','&&!q){cols.push(cur);cur=''}else cur+=c}cols.push(cur);let date=parseDate(cols[1]);if(!date)continue;let times=cols.filter(v=>/^\d{1,3}:\d{2}:\d{2}$/.test(v.trim()));let dur=times[times.length-1]||'00:00:00';let m=dur.match(/^(\d+):(\d{2}):(\d{2})$/);found[date]=m?Number(m[1])*60+Number(m[2])+Number(m[3])/60:0}return found}
+function fmt(n){n=Math.max(0,Math.round(n));return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`}
+function signed(n){return (n<0?'−':'+')+fmt(Math.abs(n))}
+function datesForWeek(s){let d=new Date(s+'T12:00:00');d.setDate(d.getDate()-((d.getDay()+6)%7));return Array.from({length:5},(_,i)=>{let x=new Date(d);x.setDate(d.getDate()+i);return x})}
+function currentWeek(){let t=iso(new Date());$('week').value=t;return t}
+function durationFor(k){if(registered[k])return DAILY;if(plans[k]!==undefined)return plans[k];if(Object.prototype.hasOwnProperty.call(attendance,k))return attendance[k];return 0}
+function isWorkday(k){let d=new Date(k+'T12:00:00');return d.getDay()!==0&&d.getDay()!==6&&!HOLIDAYS[k]}
+function render(){let selected=$('week').value;if(!selected)return;let dates=datesForWeek(selected),body=$('daysBody');body.innerHTML='';let worked=0,required=0,count=0;
+$('weekTitle').textContent=`${dates[0].toLocaleDateString('en-IN',{day:'numeric',month:'short'})} – ${dates[4].toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}`;
+for(const d of dates){let k=iso(d),holiday=HOLIDAYS[k],hasCSV=Object.prototype.hasOwnProperty.call(attendance,k),isReg=!!registered[k],mins=durationFor(k);if(!holiday&&!leaves[k]){required+=DAILY;count++}worked+=mins;
+let tr=document.createElement('tr');tr.dataset.key=k;let cbDisabled=!!holiday||hasCSV||isReg;let label=holiday?holiday:(hasCSV?'CSV record':isReg?'Register day':plans[k]!==undefined?'Planned':'Working day');
+tr.innerHTML=`<td><div class="day">${d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</div>${holiday?'<div class="sub">'+holiday+'</div>':''}</td><td class="checkcell"></td><td><span>${label}</span>${hasCSV?'<div class="sub">Attendance imported</div>':''}<div class="sub" style="margin-top:4px"><label style="font-weight:500"><input type="checkbox" class="reg" ${isReg?'checked':''} ${holiday?'disabled':''}> Register day</label></div></td><td class="duration">${fmt(mins)}</td>`;
+let cb=document.createElement('input');cb.type='checkbox';cb.checked=!!leaves[k];cb.disabled=cbDisabled;cb.title=hasCSV?'CSV attendance exists':holiday?'Public holiday':'';tr.children[1].appendChild(cb);cb.addEventListener('change',()=>{leaves[k]=cb.checked;render()});let reg=tr.querySelector('.reg');reg.addEventListener('change',()=>{registered[k]=reg.checked;if(reg.checked)leaves[k]=false;render()});body.appendChild(tr)}
+$('worked').textContent=fmt(worked);$('required').textContent=fmt(required);$('balance').textContent=signed(worked-required);$('balance').style.color=worked>=required?'var(--good)':'var(--bad)';$('daysCount').textContent=count;$('bar').style.width=(required?Math.min(100,worked/required*100):100)+'%';$('summary').className='message '+(worked>=required?'good':'');$('summary').textContent=worked>=required?`Target met. You are ${fmt(worked-required)} above the required hours.`:`You need ${fmt(required-worked)} more hours.`;
+$('results').classList.remove('hidden');$('planTitle').textContent='Plan today · '+new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});updatePlan()}
+function updatePlan(){let entry=$('entryTime').value,exit=$('leaveTime').value;if(!entry||!exit){$('todayPlan').textContent='Enter your entry and planned exit time.';return}let a=Number(entry.slice(0,2))*60+Number(entry.slice(3,5)),b=Number(exit.slice(0,2))*60+Number(exit.slice(3,5));if(b<=a){$('todayPlan').className='message bad';$('todayPlan').textContent='Planned exit must be later than entry.';return}let today=iso(new Date()),planned=b-a;let existing=durationFor(today);let prior=Object.prototype.hasOwnProperty.call(attendance,today)||registered[today]||plans[today]!==undefined;$('todayPlan').className='message';$('todayPlan').textContent=`Planned time: ${fmt(planned)}. ${planned>=DAILY?'Daily benchmark covered.':'You are '+fmt(DAILY-planned)+' short of the daily benchmark.'} ${prior?'A record already exists for today; adding this plan will replace today’s saved plan only.':''}`;window.todayPlanned=planned}
+$('csv').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;attendance=parseCSV(await f.text());leaves={};registered={};plans={};csvLoaded=true;$('notice').className='message';$('notice').textContent=`Loaded ${Object.keys(attendance).length} date records.`;render()});
+$('week').addEventListener('change',render);$('entryTime').addEventListener('change',updatePlan);$('leaveTime').addEventListener('change',updatePlan);
+$('addToday').addEventListener('click',()=>{let today=iso(new Date());if(!window.todayPlanned){updatePlan();if(!window.todayPlanned)return}plans[today]=window.todayPlanned;$('savedNotice').textContent='Today’s planned duration has been added to this week’s data.';render()});
+$('sample').addEventListener('click',()=>{attendance={'2026-10-12':531,'2026-10-13':489,'2026-10-14':510};leaves={};registered={};plans={};$('week').value='2026-10-14';$('notice').className='message';$('notice').textContent='Example loaded.';render()});
+currentWeek();let now=new Date();$('entryTime').value=`${String(Math.max(0,now.getHours())).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;$('leaveTime').value='18:00';
+</script></main></body></html>
