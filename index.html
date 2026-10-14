@@ -36,6 +36,159 @@
   --radius-sm: 10px;
 }
 
+/* Dark theme */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1120;
+  --bg-gradient: linear-gradient(160deg, #0b1120 0%, #111827 50%, #0f172a 100%);
+  --panel: #1e293b;
+  --panel2: #334155;
+  --ink: #f1f5f9;
+  --muted: #94a3b8;
+  --line: #334155;
+  --line-strong: #475569;
+  --accent: #60a5fa;
+  --accent-soft: #1e3a5f;
+  --accent-hover: #3b82f6;
+  --good: #34d399;
+  --good-bg: #064e3b;
+  --good-border: #065f46;
+  --bad: #f87171;
+  --bad-bg: #450a0a;
+  --bad-border: #7f1d1d;
+  --warn: #fbbf24;
+  --warn-bg: #451a03;
+  --warn-border: #78350f;
+  --info: #38bdf8;
+  --info-bg: #0c4a6e;
+  --info-border: #075985;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .head h1 {
+  background: linear-gradient(135deg, #93c5fd, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="dark"] #weekBanner {
+  background: linear-gradient(135deg, #1e3a5f, #1e293b);
+  border-color: #3b82f6;
+  color: #bfdbfe;
+}
+[data-theme="dark"] #sample {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+}
+[data-theme="dark"] #summaryPanel .stat:nth-child(1) {
+  background: linear-gradient(145deg, #064e3b, #065f46);
+  border-color: #34d399;
+}
+[data-theme="dark"] #summaryPanel .stat:nth-child(1) strong { color: #6ee7b7; }
+[data-theme="dark"] #summaryPanel .stat:nth-child(2) {
+  background: linear-gradient(145deg, #1e3a5f, #1e40af);
+  border-color: #60a5fa;
+}
+[data-theme="dark"] #summaryPanel .stat:nth-child(2) strong { color: #93c5fd; }
+[data-theme="dark"] #summaryPanel .stat:nth-child(3) {
+  background: linear-gradient(145deg, #451a03, #78350f);
+  border-color: #fbbf24;
+}
+[data-theme="dark"] #summaryPanel .stat:nth-child(3) strong { color: #fcd34d; }
+[data-theme="dark"] #summaryPanel .stat:nth-child(4) {
+  background: linear-gradient(145deg, #2e1065, #4c1d95);
+  border-color: #a78bfa;
+}
+[data-theme="dark"] #summaryPanel .stat:nth-child(4) strong { color: #c4b5fd; }
+[data-theme="dark"] .exit-display {
+  background: linear-gradient(145deg, #1e3a5f, #1e40af);
+  border-color: #3b82f6;
+}
+[data-theme="dark"] .exit-display .value { color: #93c5fd; }
+[data-theme="dark"] .exit-display .picker-label { color: #bfdbfe; }
+[data-theme="dark"] .spinner button {
+  background: #475569;
+  color: #f1f5f9;
+}
+[data-theme="dark"] .spinner button:hover {
+  background: var(--accent);
+  color: #0f172a;
+}
+[data-theme="dark"] .spinner .value:hover { background: #1e3a5f; }
+[data-theme="dark"] .spinner .value:active { background: #1e3a5f; }
+[data-theme="dark"] .progress { background: #334155; }
+[data-theme="dark"] .tag {
+  background: #1e3a5f;
+  color: #93c5fd;
+}
+[data-theme="dark"] button.secondary {
+  background: #334155;
+  border-color: #475569;
+  color: #f1f5f9;
+}
+[data-theme="dark"] button.secondary:hover {
+  background: #475569;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+[data-theme="dark"] th { background: #1e293b; }
+[data-theme="dark"] .message {
+  background: var(--info-bg);
+  border-color: var(--info-border);
+  color: #e0f2fe;
+}
+[data-theme="dark"] .message.good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+  color: #a7f3d0;
+}
+[data-theme="dark"] .message.bad {
+  background: var(--bad-bg);
+  border-color: var(--bad-border);
+  color: #fecaca;
+}
+[data-theme="dark"] #summary {
+  background: var(--info-bg);
+  border-color: var(--info-border);
+  color: #e0f2fe;
+}
+[data-theme="dark"] #summary.good {
+  background: var(--good-bg);
+  border-color: var(--good-border);
+  color: #a7f3d0;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  padding: 0;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.theme-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-lg);
+  background: var(--accent-soft);
+}
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon { display: none; line-height: 1; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -560,6 +713,10 @@ td:last-child, th:last-child { text-align: right; }
 </style>
 </head>
 <body>
+<button type="button" class="theme-toggle" id="themeToggle" title="Switch to dark mode" aria-label="Toggle dark mode" aria-pressed="false">
+  <span class="icon-moon" aria-hidden="true">🌙</span>
+  <span class="icon-sun" aria-hidden="true">☀️</span>
+</button>
 <main>
 <header class="head" id="pageHeader" title="Click to refresh">
   <h1>Weekly Hours Tracker</h1>
@@ -1112,21 +1269,48 @@ $('curreyCheck').addEventListener('change', renderTrains);
 $('lowerCheck').addEventListener('change', renderTrains);
 
 /* ── Init ── */
+
+/* ── Theme toggle ── */
+(function setupTheme() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('wht-theme', 'light');
+      btn.setAttribute('aria-pressed', 'false');
+      btn.title = 'Switch to dark mode';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('wht-theme', 'dark');
+      btn.setAttribute('aria-pressed', 'true');
+      btn.title = 'Switch to light mode';
+    }
+  });
+})();
+
 (function init() {
-  const now = new Date();
-  let entryDefault = now.getHours() * 60 + now.getMinutes();
-  timeState.entryH = Math.floor(entryDefault / 60) % 24;
-  timeState.entryM = entryDefault % 60;
+  // Default: 09:00 entry + 8h 30m duration → 17:30 exit
+  timeState.entryH = 9;
+  timeState.entryM = 0;
   timeState.durH = 8;
   timeState.durM = 30;
-  const exitDefault = (entryDefault + 510) % 1440;
-  timeState.exitH = Math.floor(exitDefault / 60);
-  timeState.exitM = exitDefault % 60;
+  timeState.exitH = 17;
+  timeState.exitM = 30;
 
   ['entryH', 'entryM', 'durH', 'durM', 'exitH', 'exitM'].forEach(updateDisplay);
   syncHiddenInputs();
   renderTrains();
   render();
+
+  // Theme: restore saved preference
+  const saved = localStorage.getItem('wht-theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    const btn = document.getElementById('themeToggle');
+    if (btn) { btn.setAttribute('aria-pressed', 'true'); btn.title = 'Switch to light mode'; }
+  }
 })();
 </script>
 </body>
